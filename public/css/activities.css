@@ -3205,22 +3205,52 @@ button {
 }
 
 
-.meta-icon {
 
-    width: 45px;
+/* =========================================
+   PERBAIKAN IKON WAKTU DAN LOKASI
+   TBM BINTANG RAHARJA
+========================================= */
 
-    height: 45px;
-
-    display: grid;
-
-    place-items: center;
-
+/* Posisi dan ukuran kotak ikon */
+.activities-grid .activity-card .activity-info .info-item .meta-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
     flex-shrink: 0;
 
-    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    font-size: 17px;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 20px;
+}
 
+/* Background kotak ikon jam */
+.activities-grid .activity-card .activity-info .meta-blue {
+    background-color: #EDF5FF;
+}
+
+/* Background kotak ikon lokasi */
+.activities-grid .activity-card .activity-info .meta-purple {
+    background-color: #F5EDFF;
+}
+
+/* Posisi gambar ikon di tengah kotak */
+.activities-grid .activity-card .activity-info .meta-icon img {
+    display: block;
+
+    width: 28px;
+    height: 28px;
+    max-width: none;
+
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+
+    transform: translate(0, 0);
 }
 
 
