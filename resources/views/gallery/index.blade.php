@@ -36,6 +36,8 @@
         rel="stylesheet"
         href="{{ asset('css/gallery.css') }}"
     >
+    <link rel="stylesheet" href="{{ asset('css/site-navbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site-footer.css') }}">
 
 </head>
 
@@ -55,88 +57,7 @@
          NAVBAR
     ====================================================== --}}
 
-    <header class="navbar">
-
-        <div class="container navbar-content">
-
-            <a
-                href="{{ route('home') }}"
-                class="logo"
-            >
-
-                <div class="logo-icon">
-
-                    <img
-                        src="{{ asset('images/logoTBMfinal.png') }}"
-                        alt="Logo TBM Bintang Raharja"
-                    >
-
-                </div>
-
-                <div class="logo-text">
-
-                    <strong>
-                        TBM Bintang Raharja
-                    </strong>
-
-                    <span>
-                        Membaca • Belajar • Berkarya • Bersama
-                    </span>
-
-                </div>
-
-            </a>
-
-
-            <nav class="nav-menu">
-
-                <a href="{{ route('home') }}">
-                    Beranda
-                </a>
-
-                <a href="{{ route('about') }}">
-                    Tentang
-                </a>
-
-                <a href="{{ route('activities.index') }}">
-                    Kegiatan
-                </a>
-
-                <a href="{{ route('news.index') }}">
-                    Berita
-                </a>
-
-                <a
-                    href="{{ route('gallery.index') }}"
-                    class="active"
-                >
-                    Galeri
-                </a>
-
-                <a href="{{ route('contact.index') }}">
-                    Kontak
-                </a>
-
-            </nav>
-
-
-            <a
-                href="{{ route('login') }}"
-                class="login-button"
-            >
-                <span>
-                    Masuk
-                </span>
-
-                <span class="login-arrow">
-                    →
-                </span>
-
-            </a>
-
-        </div>
-
-    </header>
+    @include('partials.site-navbar')
 
 
 
@@ -594,146 +515,7 @@
          FOOTER
     ====================================================== --}}
 
-    <footer class="footer">
-
-        <div class="footer-glow footer-glow-one"></div>
-        <div class="footer-glow footer-glow-two"></div>
-
-        <div class="container">
-
-            <div class="footer-main">
-
-
-                {{-- BRAND --}}
-
-                <div class="footer-brand">
-
-                    <div class="footer-brand-top">
-
-                        <div class="footer-logo-box">
-
-                            <img
-                                src="{{ asset('images/logoTBMfinal.png') }}"
-                                alt="Logo TBM Bintang Raharja"
-                            >
-
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                TBM Bintang Raharja
-                            </h3>
-
-                            <p>
-                                Membaca • Belajar • Berkarya • Bersama
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <p class="footer-description">
-
-                        Ruang belajar, membaca, dan berkarya
-                        untuk masyarakat. Bersama membangun
-                        lingkungan yang aktif, kreatif, dan
-                        penuh inspirasi.
-
-                    </p>
-
-                </div>
-
-
-
-                {{-- NAVIGATION --}}
-
-                <div class="footer-column">
-
-                    <span>
-                        NAVIGASI
-                    </span>
-
-                    <a href="{{ route('home') }}">
-                        Beranda
-                    </a>
-
-                    <a href="{{ route('about') }}">
-                        Tentang
-                    </a>
-
-                    <a href="{{ route('activities.index') }}">
-                        Kegiatan
-                    </a>
-
-                    <a href="{{ route('news.index') }}">
-                        Berita
-                    </a>
-
-                    <a href="{{ route('gallery.index') }}">
-                        Galeri
-                    </a>
-
-                    <a href="{{ route('contact.index') }}">
-                        Kontak
-                    </a>
-
-                </div>
-
-
-
-                {{-- LOCATION --}}
-
-                <div class="footer-column">
-
-                    <span>
-                        KUNJUNGI KAMI
-                    </span>
-
-                    <strong>
-                        TBM Bintang Raharja
-                    </strong>
-
-                    <p>
-                        Desa Karangharja,
-                        Cikarang Utara,
-                        Kabupaten Bekasi.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="footer-bottom">
-
-                <p>
-
-                    © {{ date('Y') }}
-                    <strong>
-                        TBM Bintang Raharja
-                    </strong>.
-                    Semua hak dilindungi.
-
-                </p>
-
-
-                <div class="footer-status">
-
-                    <span class="status-dot"></span>
-
-                    <span>
-                        Terus tumbuh bersama
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
+    @include('partials.site-footer')
 
 
 

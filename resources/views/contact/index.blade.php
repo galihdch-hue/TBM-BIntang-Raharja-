@@ -39,6 +39,8 @@
         rel="stylesheet"
         href="{{ asset('css/contact.css') }}"
     >
+    <link rel="stylesheet" href="{{ asset('css/site-navbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site-footer.css') }}">
 
 </head>
 
@@ -50,75 +52,7 @@
      NAVBAR
 ===================================================== --}}
 
-<header class="navbar">
-
-    <div class="container navbar-content">
-
-        <a
-            href="{{ route('home') }}"
-            class="logo"
-        >
-
-            <div class="logo-icon">
-                <img
-                        src="{{ asset('images\logoTBMfinal.png') }}"
-                    >
-            </div>
-
-            <div>
-
-                <strong>
-                    TBM Bintang Raharja
-                </strong>
-
-                <span>
-                    Membaca • Belajar • Berkarya • Bersama
-                </span>
-
-            </div>
-
-        </a>
-
-
-        <nav class="nav-menu">
-
-    <a href="{{ route('home') }}">
-        Beranda
-    </a>
-
-    <a href="{{ route('about') }}">
-        Tentang
-    </a>
-
-    <a href="{{ route('activities.index') }}">
-        Kegiatan
-    </a>
-
-    <a href="{{ route('news.index') }}">
-        Berita
-    </a>
-
-    <a href="{{ route('gallery.index') }}">
-        Galeri
-    </a>
-
-    <a href="{{ route('contact.index') }}">
-        Kontak
-    </a>
-
-</nav>
-
-
-        <a
-            href="{{ route('login') }}"
-            class="login-button"
-        >
-            Masuk
-        </a>
-
-    </div>
-
-</header>
+@include('partials.site-navbar')
 
 
 
@@ -213,12 +147,20 @@
 
             <div class="contact-person-card">
 
-    <div class="person-avatar">
+    <button
+        type="button"
+        class="person-avatar"
+        data-profile-image="{{ asset('images/bu murni.jpeg') }}"
+        data-profile-name="Ibu Murni Setianingsih, S.Pd."
+        aria-label="Lihat foto profil Ibu Murni Setianingsih"
+    >
         <img
             src="{{ asset('images/bu murni.jpeg') }}"
-            alt="Galih Dwi Chandra"
+    alt=""
+    loading="lazy"
         >
-    </div>
+        <span class="person-avatar-hint" aria-hidden="true">+</span>
+    </button>
 
                 <div class="person-info">
 
@@ -238,8 +180,9 @@
                     <div class="person-contact-list">
 
                         <a
-                            href="#"
+                            href="https://wa.me/6281319083960"
                             target="_blank"
+                            rel="noopener noreferrer"
                             class="person-contact whatsapp"
                         >
                             <span>💬</span>
@@ -248,19 +191,6 @@
                                 <small>+62 813-1908-3960</small>
                             </div>
                         </a>
-
-
-                        <a
-                            href="mailto:#"
-                            class="person-contact email"
-                        >
-                            <span>✉️</span>
-                            <div>
-                                <strong>Email</strong>
-                                <small>Kirim pesan melalui email</small>
-                            </div>
-                        </a>
-
                     </div>
 
                 </div>
@@ -274,12 +204,20 @@
 
 <div class="contact-person-card">
 
-    <div class="person-avatar">
+    <button
+        type="button"
+        class="person-avatar"
+        data-profile-image="{{ asset('images/galih.jpeg') }}"
+        data-profile-name="Galih Dwi Chandra"
+        aria-label="Lihat foto profil Galih Dwi Chandra"
+    >
         <img
             src="{{ asset('images/galih.jpeg') }}"
-            alt="Galih Dwi Chandra"
+            alt=""
+            loading="lazy"
         >
-    </div>
+        <span class="person-avatar-hint" aria-hidden="true">+</span>
+    </button>
 
     <div class="person-info">
 
@@ -298,8 +236,9 @@
         <div class="person-contact-list">
 
             <a
-                href="#"
+                href="https://wa.me/628980525220"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="person-contact whatsapp"
             >
                             <span>💬</span>
@@ -310,17 +249,124 @@
                         </a>
 
 
+            <a
+                href="mailto:galih.dch@gmail.com"
+                class="person-contact email"
+            >
+                <span>✉️</span>
+                <div>
+                    <strong>Email</strong>
+                    <small>galih.dch@gmail.com</small>
+                </div>
+            </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- MERLYN SUMARDIYANI --}}
+
+            <div class="contact-person-card">
+
+                <button
+                    type="button"
+                    class="person-avatar"
+                    data-profile-image="{{ asset('images/merlin.jpeg') }}"
+                    data-profile-name="Merlyn Sumardiyani"
+                    aria-label="Lihat foto profil Merlyn Sumardiyani"
+                >
+                    <img
+                        src="{{ asset('images/merlin.jpeg') }}"
+                        alt=""
+                        loading="lazy"
+                    >
+                    <span class="person-avatar-hint" aria-hidden="true">+</span>
+                </button>
+
+                <div class="person-info">
+
+                    <span class="person-role">Sekretaris 2</span>
+
+                    <h3>Merlyn Sumardiyani</h3>
+
+                    <p>Pengurus TBM Bintang Raharja</p>
+
+                    <div class="person-contact-list">
                         <a
-                            href="mailto:#"
+                            href="https://wa.me/62895360679144"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="person-contact whatsapp"
+                        >
+                            <span>💬</span>
+                            <div>
+                                <strong>WhatsApp</strong>
+                                <small>+62 895-3606-79144</small>
+                            </div>
+                        </a>
+
+                        <a
+                            href="mailto:merlynsumardiyani47@gmail.com"
                             class="person-contact email"
                         >
                             <span>✉️</span>
                             <div>
                                 <strong>Email</strong>
-                                <small>galih.dch@gmail.com</small>
+                                <small>merlynsumardiyani47@gmail.com</small>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- ASHILA NUR FATIHAH --}}
+
+            <div class="contact-person-card">
+
+                <div
+                    class="person-avatar person-avatar--placeholder"
+                    role="img"
+                    aria-label="Foto Ashila Nur Fatihah belum tersedia"
+                >
+                    <span>ANF</span>
+                </div>
+
+                <div class="person-info">
+
+                    <span class="person-role">Bendahara 2</span>
+
+                    <h3>Ashila Nur Fatihah</h3>
+
+                    <p>Pengurus TBM Bintang Raharja</p>
+
+                    <div class="person-contact-list">
+                        <a
+                            href="https://wa.me/6281318356692"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="person-contact whatsapp"
+                        >
+                            <span>💬</span>
+                            <div>
+                                <strong>WhatsApp</strong>
+                                <small>+62 813-1835-6692</small>
                             </div>
                         </a>
 
+                        <a
+                            href="mailto:ashilanurfatihah@gmail.com"
+                            class="person-contact email"
+                        >
+                            <span>✉️</span>
+                            <div>
+                                <strong>Email</strong>
+                                <small>ashilanurfatihah@gmail.com</small>
+                            </div>
+                        </a>
                     </div>
 
                 </div>
@@ -685,19 +731,34 @@
      CTA
 ===================================================== --}}
 
-<section class="cta-section">
+<section class="cta-section contact-cta">
+
+    <div class="cta-atmosphere" aria-hidden="true">
+        <span class="cta-orbit cta-orbit--one"></span>
+        <span class="cta-orbit cta-orbit--two"></span>
+        <span class="cta-glow cta-glow--left"></span>
+        <span class="cta-glow cta-glow--right"></span>
+        <span class="cta-spark cta-spark--one">✦</span>
+        <span class="cta-spark cta-spark--two">✧</span>
+        <span class="cta-spark cta-spark--three">✦</span>
+        <span class="cta-spark cta-spark--four">✧</span>
+    </div>
 
     <div class="container">
 
         <div class="cta-content">
 
-            <span>
+            <span class="cta-eyebrow">
+                <i aria-hidden="true">✦</i>
                 TBM BINTANG RAHARJA
+                <i aria-hidden="true">✦</i>
             </span>
 
             <h2>
                 Mari belajar dan berkembang bersama.
             </h2>
+
+            <div class="cta-title-line" aria-hidden="true"></div>
 
             <p>
                 Ikuti kegiatan dan program
@@ -706,9 +767,10 @@
 
             <a
                 href="{{ route('activities.index') }}"
-                class="button white"
+                class="button white cta-button"
             >
                 Lihat Kegiatan
+                <span aria-hidden="true">→</span>
             </a>
 
         </div>
@@ -723,40 +785,11 @@
      FOOTER
 ===================================================== --}}
 
-<footer class="footer">
+<dialog class="profile-lightbox" id="profile-lightbox" aria-label="Foto profil kontak">
+    <img class="profile-lightbox__image" id="profile-lightbox-image" alt="">
+</dialog>
 
-    <div class="container">
-
-        <div class="footer-content">
-
-            <div>
-
-                <h3>
-                    TBM Bintang Raharja
-                </h3>
-
-                <p>
-                    Membaca • Belajar • Berkarya • Bersama
-                </p>
-
-            </div>
-
-
-            <div>
-
-                <p>
-                    Desa Karangharja,
-                    Cikarang Utara,
-                    Kabupaten Bekasi.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</footer>
+@include('partials.site-footer')
 
 
 
@@ -780,6 +813,26 @@ function showMessage(event)
 
     return false;
 }
+
+const profileLightbox =
+    document.getElementById('profile-lightbox');
+
+const profileLightboxImage =
+    document.getElementById('profile-lightbox-image');
+
+document.querySelectorAll('.person-avatar[data-profile-image]').forEach(button => {
+    button.addEventListener('click', () => {
+        profileLightboxImage.src = button.dataset.profileImage;
+        profileLightboxImage.alt = button.dataset.profileName;
+        profileLightbox.showModal();
+    });
+});
+
+profileLightbox.addEventListener('click', event => {
+    if (event.target === profileLightbox) {
+        profileLightbox.close();
+    }
+});
 
 </script>
 

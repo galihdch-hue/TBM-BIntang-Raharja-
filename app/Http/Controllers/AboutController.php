@@ -24,7 +24,7 @@ class AboutController extends Controller
 
     [
         'year' => '2020–2021',
-        'title' => 'Berkeliling dengan Gerobak Es Mambo',
+        'title' => 'Berkeliling dengan Gerobak',
         'description' => 'Salah satu cara awal menggerakkan kegiatan literasi dilakukan dengan menggunakan gerobak es mambo untuk berkeliling di lingkungan Perumahan Puri Mutiara Indah. Gerobak tersebut digunakan untuk mengumpulkan anak-anak agar dapat berkumpul, membaca buku, dan mengikuti kegiatan edukatif.'
     ],
 

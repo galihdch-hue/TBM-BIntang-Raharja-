@@ -2286,6 +2286,64 @@ textarea {
     z-index: 2;
 }
 
+button.person-avatar {
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: zoom-in;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.person-avatar:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 4px;
+}
+
+.person-avatar-hint {
+    position: absolute;
+    z-index: 3;
+    right: 4px;
+    bottom: 4px;
+    display: grid;
+    width: 23px;
+    height: 23px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 50%;
+    color: white;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    font-size: 17px;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(.75);
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+.person-avatar:hover .person-avatar-hint,
+.person-avatar:focus-visible .person-avatar-hint {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.person-avatar--placeholder {
+    color: var(--green-dark);
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.person-avatar--placeholder > span {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-person-card:nth-child(3) {
+    animation-delay: .3s;
+}
+
+.contact-person-card:nth-child(4) {
+    animation-delay: .45s;
+}
 
 .contact-person-card:hover .person-avatar {
 
@@ -2944,6 +3002,535 @@ textarea {
 
 
 /* =========================================================
+   CONTACT CTA EXPERIENCE
+========================================================= */
+
+@property --cta-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.contact-cta {
+    display: flex;
+    align-items: center;
+    min-height: 470px;
+    padding: clamp(72px, 9vw, 118px) 0;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 18% 24%, rgba(108, 255, 229, .38), transparent 25%),
+        radial-gradient(circle at 82% 78%, rgba(194, 164, 255, .34), transparent 27%),
+        linear-gradient(125deg, #069b91, #16b8c5, #468de9, #7166e8);
+    background-size: auto, auto, 300% 300%;
+    animation: contactCtaGradient 14s ease infinite;
+}
+
+.contact-cta::before {
+    top: -250px;
+    left: -180px;
+    width: 580px;
+    height: 580px;
+    border-color: rgba(255, 255, 255, .2);
+    box-shadow:
+        0 0 0 42px rgba(255, 255, 255, .035),
+        0 0 0 84px rgba(255, 255, 255, .025),
+        0 0 0 126px rgba(255, 255, 255, .018);
+}
+
+.contact-cta::after {
+    right: -170px;
+    bottom: -180px;
+    width: 430px;
+    height: 430px;
+    background: radial-gradient(circle, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 68%);
+    filter: blur(1px);
+}
+
+.cta-atmosphere {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cta-atmosphere::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .14;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .25) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .25) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(ellipse at center, black, transparent 78%);
+}
+
+.cta-atmosphere::after {
+    content: "";
+    position: absolute;
+    inset: -25%;
+    opacity: .3;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, .22), transparent 48%);
+    animation: contactCtaSpotlight 12s ease-in-out infinite alternate;
+}
+
+.cta-orbit {
+    position: absolute;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 50%;
+}
+
+.cta-orbit::before,
+.cta-orbit::after {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border: 1px solid rgba(255, 255, 255, .8);
+    border-radius: 50%;
+    box-shadow: 0 0 18px currentColor, 0 0 36px currentColor;
+}
+
+.cta-orbit::before {
+    top: 15%;
+    left: 10%;
+    color: #68ffe3;
+    background: #68ffe3;
+}
+
+.cta-orbit::after {
+    right: 17%;
+    bottom: 10%;
+    color: #c9b0ff;
+    background: #c9b0ff;
+}
+
+.cta-orbit--one {
+    top: 8%;
+    right: 7%;
+    width: min(38vw, 500px);
+    height: min(22vw, 260px);
+    transform: rotate(-24deg);
+    animation: contactCtaOrbitOne 13s ease-in-out infinite;
+}
+
+.cta-orbit--two {
+    bottom: -23%;
+    left: 18%;
+    width: min(31vw, 400px);
+    aspect-ratio: 1;
+    border-color: rgba(255, 255, 255, .15);
+    animation: contactCtaOrbitTwo 17s ease-in-out infinite;
+}
+
+.cta-glow {
+    position: absolute;
+    width: 190px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    filter: blur(45px);
+    opacity: .42;
+}
+
+.cta-glow--left {
+    top: 19%;
+    left: 13%;
+    background: #68ffe3;
+    animation: contactCtaGlow 8s ease-in-out infinite alternate;
+}
+
+.cta-glow--right {
+    right: 14%;
+    bottom: 10%;
+    background: #c9b0ff;
+    animation: contactCtaGlow 10s ease-in-out infinite alternate-reverse;
+}
+
+.cta-spark {
+    position: absolute;
+    color: rgba(255, 255, 255, .9);
+    text-shadow: 0 0 18px rgba(255, 255, 255, .85);
+    animation: contactCtaSpark 3.4s ease-in-out infinite;
+}
+
+.cta-spark--one {
+    top: 21%;
+    left: 28%;
+    font-size: 22px;
+}
+
+.cta-spark--two {
+    top: 31%;
+    right: 24%;
+    font-size: 31px;
+    animation-delay: .8s;
+}
+
+.cta-spark--three {
+    right: 33%;
+    bottom: 17%;
+    font-size: 17px;
+    animation-delay: 1.4s;
+}
+
+.cta-spark--four {
+    bottom: 24%;
+    left: 19%;
+    font-size: 25px;
+    animation-delay: 2s;
+}
+
+.contact-cta .container {
+    position: relative;
+    z-index: 1;
+}
+
+.contact-cta .cta-content {
+    width: min(100%, 980px);
+    margin-inline: auto;
+    padding: clamp(34px, 5vw, 64px) clamp(24px, 6vw, 80px);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .33);
+    border-radius: 34px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .19), rgba(255, 255, 255, .08));
+    box-shadow:
+        0 35px 100px rgba(18, 45, 114, .24),
+        inset 0 1px 0 rgba(255, 255, 255, .28);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    animation: contactCtaFloat 7s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+.contact-cta .cta-content::before {
+    content: "";
+    position: absolute;
+    top: -90%;
+    left: -45%;
+    width: 42%;
+    height: 280%;
+    opacity: .18;
+    background: linear-gradient(90deg, transparent, white, transparent);
+    transform: rotate(28deg);
+    animation: contactCtaShine 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.contact-cta .cta-content::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    background: conic-gradient(
+        from var(--cta-border-angle),
+        transparent 0deg,
+        rgba(104, 255, 227, .95) 48deg,
+        rgba(22, 184, 197, .92) 112deg,
+        rgba(70, 141, 233, .95) 195deg,
+        rgba(113, 102, 232, .95) 278deg,
+        transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: .7;
+    animation: contactCtaBorderSpin 9s linear infinite;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.contact-cta .cta-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 16px;
+    border: 1px solid rgba(255, 255, 255, .34);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .12);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.4px;
+    text-shadow: 0 2px 12px rgba(0, 61, 110, .18);
+}
+
+.contact-cta .cta-eyebrow i {
+    color: #e4ff8f;
+    font-size: 14px;
+    font-style: normal;
+    animation: contactCtaSpark 2.6s ease-in-out infinite;
+}
+
+.contact-cta .cta-content h2 {
+    margin: 22px 0 14px;
+    color: white;
+    font-size: clamp(38px, 5vw, 68px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -2.5px;
+    text-wrap: balance;
+    text-shadow: 0 8px 35px rgba(0, 51, 108, .22);
+}
+
+.contact-cta .cta-title-line {
+    width: 86px;
+    height: 4px;
+    margin: 0 auto 18px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #d9ff8c, white, #9cf7ff);
+    box-shadow: 0 0 24px rgba(217, 255, 140, .75);
+    animation: contactCtaLine 3s ease-in-out infinite alternate;
+}
+
+.contact-cta .cta-content p {
+    margin: 0 auto 30px;
+    color: rgba(255, 255, 255, .92);
+    font-size: clamp(14px, 1.5vw, 18px);
+    line-height: 1.7;
+    text-shadow: 0 2px 12px rgba(0, 51, 108, .2);
+}
+
+.contact-cta .cta-button {
+    min-height: 58px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 28px;
+    border: 1px solid rgba(255, 255, 255, .8);
+    border-radius: 18px;
+    color: #07866d;
+    background: linear-gradient(135deg, #fff, #efffff);
+    box-shadow:
+        0 14px 35px rgba(0, 57, 102, .2),
+        0 0 0 0 rgba(255, 255, 255, .4);
+    font-size: 15px;
+    font-weight: 800;
+    transition: box-shadow .3s ease, transform .3s ease;
+}
+
+.contact-cta .cta-button:hover {
+    transform: translateY(-5px) scale(1.035);
+    box-shadow:
+        0 20px 50px rgba(0, 57, 102, .3),
+        0 0 0 8px rgba(255, 255, 255, .14);
+}
+
+.contact-cta .cta-button span {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    border-radius: 50%;
+    color: white;
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+    font-size: 17px;
+    line-height: 1;
+    transition: transform .3s ease;
+    animation: contactCtaArrowGlow 2.8s ease-in-out infinite;
+}
+
+.contact-cta .cta-button:hover span {
+    transform: translateX(4px);
+}
+
+.contact-cta .cta-button:focus-visible {
+    outline: 3px solid #e4ff8f;
+    outline-offset: 5px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .contact-cta .cta-content:hover {
+        box-shadow:
+            0 42px 110px rgba(18, 45, 114, .3),
+            0 0 34px rgba(104, 255, 227, .2),
+            inset 0 1px 0 rgba(255, 255, 255, .34);
+    }
+
+    .contact-cta .cta-content:hover::after {
+        opacity: 1;
+    }
+}
+
+@keyframes contactCtaGradient {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes contactCtaSpotlight {
+    from {
+        transform: translate3d(-5%, -2%, 0) scale(.9);
+    }
+
+    to {
+        transform: translate3d(5%, 3%, 0) scale(1.08);
+    }
+}
+
+@keyframes contactCtaOrbitOne {
+    0%,
+    100% {
+        transform: rotate(-24deg) translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: rotate(-18deg) translate3d(-18px, 24px, 0);
+    }
+}
+
+@keyframes contactCtaOrbitTwo {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(30px, -20px, 0) scale(1.08);
+    }
+}
+
+@keyframes contactCtaBorderSpin {
+    to {
+        --cta-border-angle: 360deg;
+    }
+}
+
+@keyframes contactCtaArrowGlow {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(104, 255, 227, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(104, 255, 227, .16), 0 0 20px rgba(113, 102, 232, .28);
+    }
+}
+
+@keyframes contactCtaGlow {
+    from {
+        transform: translate3d(-12px, 8px, 0) scale(.9);
+        opacity: .3;
+    }
+
+    to {
+        transform: translate3d(18px, -14px, 0) scale(1.16);
+        opacity: .55;
+    }
+}
+
+@keyframes contactCtaSpark {
+    0%,
+    100% {
+        opacity: .45;
+        transform: scale(.8) rotate(-12deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15) rotate(12deg);
+    }
+}
+
+@keyframes contactCtaFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes contactCtaShine {
+    0%,
+    18% {
+        left: -45%;
+    }
+
+    55%,
+    100% {
+        left: 125%;
+    }
+}
+
+@keyframes contactCtaLine {
+    from {
+        width: 62px;
+        opacity: .7;
+    }
+
+    to {
+        width: 110px;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 700px) {
+    .contact-cta {
+        min-height: 400px;
+        padding: 68px 0;
+    }
+
+    .contact-cta .cta-content {
+        border-radius: 27px;
+    }
+
+    .contact-cta .cta-content h2 {
+        letter-spacing: -1.5px;
+    }
+
+    .cta-orbit--one {
+        width: 66vw;
+        height: 35vw;
+    }
+}
+
+@media (max-width: 500px) {
+    .contact-cta .cta-content {
+        padding: 34px 22px;
+        border-radius: 23px;
+    }
+
+    .contact-cta .cta-eyebrow {
+        gap: 7px;
+        padding: 8px 11px;
+        font-size: 9px;
+        letter-spacing: 1.6px;
+    }
+
+    .contact-cta .cta-content h2 {
+        font-size: 35px;
+        letter-spacing: -1.2px;
+    }
+
+    .contact-cta .cta-button {
+        min-height: 54px;
+        padding: 0 21px;
+        font-size: 14px;
+    }
+
+    .cta-spark--one {
+        left: 8%;
+    }
+
+    .cta-spark--two {
+        right: 9%;
+    }
+}
+
+
+/* =========================================================
    ACCESSIBILITY
 ========================================================= */
 
@@ -2960,5 +3547,58 @@ textarea {
         scroll-behavior: auto !important;
 
         transition-duration: .01ms !important;
+    }
+
+    .contact-cta,
+    .contact-cta::before,
+    .contact-cta::after,
+    .contact-cta .cta-content,
+    .contact-cta .cta-content::before,
+    .contact-cta .cta-content::after,
+    .cta-atmosphere::after,
+    .cta-orbit,
+    .cta-orbit::before,
+    .cta-orbit::after,
+    .cta-glow,
+    .cta-spark,
+    .contact-cta .cta-eyebrow i,
+    .contact-cta .cta-title-line,
+    .contact-cta .cta-button span {
+        animation: none !important;
+    }
+}
+
+.profile-lightbox {
+    position: fixed;
+    inset: 0;
+    width: fit-content;
+    max-width: none;
+    height: fit-content;
+    max-height: none;
+    margin: auto;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    box-shadow: none;
+}
+
+.profile-lightbox::backdrop {
+    background: rgba(8, 16, 28, .9);
+}
+
+.profile-lightbox__image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 96vw;
+    max-height: 94vh;
+    object-fit: contain;
+}
+
+@media (max-width: 500px) {
+    .profile-lightbox {
+        max-width: 96vw;
     }
 }

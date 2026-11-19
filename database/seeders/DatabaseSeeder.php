@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
             ActivitySeeder::class,
             NewsSeeder::class,
             GallerySeeder::class,
-            MaterialSeeder::class,
         ]);
     }
 }

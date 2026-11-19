@@ -25,6 +25,8 @@
         rel="stylesheet"
         href="{{ asset('css/activities.css') }}"
     >
+    <link rel="stylesheet" href="{{ asset('css/site-navbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site-footer.css') }}">
 </head>
 
 <body>
@@ -34,81 +36,7 @@
      TETAP
 ========================================================= --}}
 
-<header class="navbar">
-
-    <div class="container navbar-content">
-
-        <a
-            href="{{ route('home') }}"
-            class="logo"
-        >
-
-            <div class="logo-icon">
-
-                <img
-                    src="{{ asset('images/logoTBMfinal.png') }}"
-                    alt="Logo TBM Bintang Raharja"
-                >
-
-            </div>
-
-            <div>
-
-                <strong>
-                    TBM Bintang Raharja
-                </strong>
-
-                <span>
-                    Membaca • Belajar • Berkarya • Bersama
-                </span>
-
-            </div>
-
-        </a>
-
-
-        <nav class="nav-menu">
-
-            <a href="{{ route('home') }}">
-                Beranda
-            </a>
-
-            <a href="{{ route('about') }}">
-                Tentang
-            </a>
-
-            <a
-                href="{{ route('activities.index') }}"
-                class="{{ request()->routeIs('activities.*') ? 'active' : '' }}"
-            >
-                Kegiatan
-            </a>
-
-            <a href="{{ route('news.index') }}">
-                Berita
-            </a>
-
-            <a href="{{ route('gallery.index') }}">
-                Galeri
-            </a>
-
-            <a href="{{ route('contact.index') }}">
-                Kontak
-            </a>
-
-        </nav>
-
-
-        <a
-            href="{{ route('login') }}"
-            class="login-button"
-        >
-            Masuk
-        </a>
-
-    </div>
-
-</header>
+@include('partials.site-navbar')
 
 
 {{-- =========================================================
@@ -451,51 +379,21 @@
 
 {{-- INSTRUCTOR --}}
 @if($activity->instructor)
-
-    @php
-        $instructorImages = [
-            'Kak Rina' => 'images/galih.jpeg',
-            'Galih' => 'images/galih.jpeg',
-
-            'Kak Siti' => 'images/kak-siti.jpg',
-            'Siti' => 'images/kak-siti.jpg',
-
-            'Kak Dimas' => 'images/kak-dimas.jpg',
-            'Dimas' => 'images/kak-dimas.jpg',
-        ];
-
-        $instructorImage = $instructorImages[$activity->instructor] ?? null;
-
-        // Nama yang ditampilkan
-        $instructorName = match ($activity->instructor) {
-            'Kak Rina' => 'Ka Nugan',
-            'Rina' => 'Galih',
-
-            'Kak Siti' => 'Ka Ashila',
-            'Siti' => 'Siti',
-
-            'Kak Dimas' => 'Ka Agung',
-            'Dimas' => 'Dimas',
-
-            default => $activity->instructor,
-        };
-    @endphp
-
     <div class="instructor">
 
         <div class="instructor-avatar">
 
-            @if($instructorImage && file_exists(public_path($instructorImage)))
+            @if($activity->instructor_image && file_exists(public_path($activity->instructor_image)))
 
                 <img
-                    src="{{ asset($instructorImage) }}"
-                    alt="{{ $instructorName }}"
+                    src="{{ asset($activity->instructor_image) }}"
+                    alt="{{ $activity->instructor_display_name }}"
                 >
 
             @else
 
                 <span>
-                    {{ strtoupper(substr($instructorName, 0, 1)) }}
+                    {{ strtoupper(substr($activity->instructor_display_name, 0, 1)) }}
                 </span>
 
             @endif
@@ -506,7 +404,7 @@
             <small>Pengajar</small>
 
             <strong>
-                {{ $instructorName }}
+                {{ $activity->instructor_display_name }}
             </strong>
         </div>
 
@@ -517,14 +415,12 @@
 
                             {{-- BUTTON --}}
 
-                            <a href="{{ route('activities.show', $activity->id) }}" class="detail-button">
-    Lihat Detail
-    <span>→</span>
-</a>
-                                <b>
-                                    →
-                                </b>
-
+                            <a
+                                href="{{ route('activities.show', $activity->id) }}"
+                                class="detail-button"
+                            >
+                                <span>Lihat Detail</span>
+                                <b>→</b>
                             </a>
 
                         </div>
@@ -631,83 +527,7 @@
      FOOTER
 ========================================================= --}}
 
-<footer class="footer">
-
-    <div class="footer-glow"></div>
-
-    <div class="footer-container">
-
-
-        <div class="footer-brand">
-
-            <div class="footer-logo">
-
-                <img
-                    src="{{ asset('images/logoTBMfinal.png') }}"
-                    alt="TBM Bintang Raharja"
-                >
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    TBM Bintang Raharja
-                </strong>
-
-                <p>
-                    Ruang belajar, membaca,
-                    dan berkarya untuk masyarakat.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <a href="{{ route('home') }}">
-                Beranda
-            </a>
-
-            <a href="{{ route('about') }}">
-                Tentang
-            </a>
-
-            <a href="{{ route('activities.index') }}">
-                Kegiatan
-            </a>
-
-            <a href="{{ route('news.index') }}">
-                Berita
-            </a>
-
-            <a href="{{ route('gallery.index') }}">
-                Galeri
-            </a>
-
-            <a href="{{ route('contact.index') }}">
-                Kontak
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-        <p>
-            © {{ date('Y') }}
-            TBM Bintang Raharja.
-            Semua hak dilindungi.
-        </p>
-
-    </div>
-
-</footer>
+@include('partials.site-footer')
 
 
 <script>

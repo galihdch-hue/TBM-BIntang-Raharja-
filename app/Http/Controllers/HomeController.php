@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -31,26 +32,9 @@ class HomeController extends Controller
             ],
         ];
 
-        $activities = [
-            [
-                'title' => 'Belajar Bersama Kakak Relawan',
-                'date' => 'Minggu, 13 September 2026',
-                'time' => '09.00 - 10.00',
-                'category' => 'Literasi',
-            ],
-            [
-                'title' => 'Kelas Kreativitas Anak',
-                'date' => 'Minggu, 13 September 2026',
-                'time' => '10.00 - 11.00',
-                'category' => 'Kreativitas',
-            ],
-            [
-                'title' => 'Belajar Komputer Dasar',
-                'date' => 'Minggu, 20 September 2026',
-                'time' => '09.00 - 10.00',
-                'category' => 'Teknologi',
-            ],
-        ];
+        $activities = Activity::where('is_active', true)
+            ->orderBy('date', 'asc')
+            ->get();
 
         $partners = [
             'President University',

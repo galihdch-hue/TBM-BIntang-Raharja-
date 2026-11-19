@@ -26,6 +26,8 @@
         rel="stylesheet"
         href="{{ asset('css/activities.css') }}"
     >
+    <link rel="stylesheet" href="{{ asset('css/site-navbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site-footer.css') }}">
 
 </head>
 
@@ -37,81 +39,7 @@
      NAVBAR
 ========================================================= --}}
 
-<header class="navbar">
-
-    <div class="container navbar-content">
-
-        <a
-            href="{{ route('home') }}"
-            class="logo"
-        >
-
-            <div class="logo-icon">
-
-                <img
-                    src="{{ asset('images/logoTBMfinal.png') }}"
-                    alt="Logo TBM Bintang Raharja"
-                >
-
-            </div>
-
-            <div>
-
-                <strong>
-                    TBM Bintang Raharja
-                </strong>
-
-                <span>
-                    Membaca • Belajar • Berkarya • Bersama
-                </span>
-
-            </div>
-
-        </a>
-
-
-        <nav class="nav-menu">
-
-            <a href="{{ route('home') }}">
-                Beranda
-            </a>
-
-            <a href="{{ route('about') }}">
-                Tentang
-            </a>
-
-            <a
-                href="{{ route('activities.index') }}"
-                class="active"
-            >
-                Kegiatan
-            </a>
-
-            <a href="{{ route('news.index') }}">
-                Berita
-            </a>
-
-            <a href="{{ route('gallery.index') }}">
-                Galeri
-            </a>
-
-            <a href="{{ route('contact.index') }}">
-                Kontak
-            </a>
-
-        </nav>
-
-
-        <a
-            href="{{ route('login') }}"
-            class="login-button"
-        >
-            Masuk
-        </a>
-
-    </div>
-
-</header>
+@include('partials.site-navbar')
 
 
 {{-- =========================================================
@@ -313,8 +241,17 @@
 
                         <div class="meta-item">
 
-                            <div class="meta-icon meta-yellow">
-                                👤
+                            <div class="instructor-photo meta-yellow">
+                                @if($activity->instructor_image && file_exists(public_path($activity->instructor_image)))
+                                    <img
+                                        src="{{ asset($activity->instructor_image) }}"
+                                        alt="Foto profil {{ $activity->instructor_display_name }}"
+                                    >
+                                @else
+                                    <span>
+                                        {{ strtoupper(substr($activity->instructor_display_name, 0, 1)) }}
+                                    </span>
+                                @endif
                             </div>
 
                             <div>
@@ -324,7 +261,7 @@
                                 </small>
 
                                 <strong>
-                                    {{ $activity->instructor }}
+                                    {{ $activity->instructor_display_name }}
                                 </strong>
 
                             </div>
@@ -427,83 +364,7 @@
      FOOTER
 ========================================================= --}}
 
-<footer class="footer">
-
-    <div class="footer-glow"></div>
-
-    <div class="footer-container">
-
-
-        <div class="footer-brand">
-
-            <div class="footer-logo">
-
-                <img
-                    src="{{ asset('images/logoTBMfinal.png') }}"
-                    alt="TBM Bintang Raharja"
-                >
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    TBM Bintang Raharja
-                </strong>
-
-                <p>
-                    Ruang belajar, membaca,
-                    dan berkarya untuk masyarakat.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <a href="{{ route('home') }}">
-                Beranda
-            </a>
-
-            <a href="{{ route('about') }}">
-                Tentang
-            </a>
-
-            <a href="{{ route('activities.index') }}">
-                Kegiatan
-            </a>
-
-            <a href="{{ route('news.index') }}">
-                Berita
-            </a>
-
-            <a href="{{ route('gallery.index') }}">
-                Galeri
-            </a>
-
-            <a href="{{ route('contact.index') }}">
-                Kontak
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-        <p>
-            © {{ date('Y') }}
-            TBM Bintang Raharja.
-            Semua hak dilindungi.
-        </p>
-
-    </div>
-
-</footer>
+@include('partials.site-footer')
 
 
 <script>

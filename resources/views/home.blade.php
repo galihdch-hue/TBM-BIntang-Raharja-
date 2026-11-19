@@ -35,6 +35,8 @@
         rel="stylesheet"
         href="{{ asset('css/home.css') }}"
     >
+    <link rel="stylesheet" href="{{ asset('css/site-navbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site-footer.css') }}">
 </head>
 
 
@@ -87,85 +89,7 @@
      NAVBAR
 ========================================================= --}}
 
-<header class="navbar">
-
-    <div class="container navbar-content">
-
-        {{-- LOGO --}}
-
-        <a
-            href="{{ route('home') }}"
-            class="logo"
-        >
-
-            <div class="logo-icon">
-
-                <img
-                    src="{{ asset('images/logoTBMfinal.png') }}"
-                    alt="Logo TBM Bintang Raharja"
-                >
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    TBM Bintang Raharja
-                </strong>
-
-                <span>
-                    Membaca • Belajar • Berkarya • Bersama
-                </span>
-
-            </div>
-
-        </a>
-
-
-        {{-- MENU NAVIGASI --}}
-
-        <nav class="nav-menu">
-
-            <a href="{{ route('home') }}">
-                Beranda
-            </a>
-
-            <a href="{{ route('about') }}">
-                Tentang
-            </a>
-
-            <a href="{{ route('activities.index') }}">
-                Kegiatan
-            </a>
-
-            <a href="{{ route('news.index') }}">
-                Berita
-            </a>
-
-            <a href="{{ route('gallery.index') }}">
-                Galeri
-            </a>
-
-            <a href="{{ route('contact.index') }}">
-                Kontak
-            </a>
-
-        </nav>
-
-
-        {{-- LOGIN --}}
-
-        <a
-            href="{{ route('login') }}"
-            class="login-button"
-        >
-            Masuk
-        </a>
-
-    </div>
-
-</header>
+@include('partials.site-navbar')
 
 
 
@@ -584,11 +508,11 @@
 
                     <div class="activity-image">
 
-                        @if (!empty($activity['image'] ?? null))
+                        @if ($activity->image)
 
                             <img
-                                src="{{ asset('storage/' . $activity['image']) }}"
-                                alt="{{ $activity['title'] }}"
+                                src="{{ asset('storage/' . $activity->image) }}"
+                                alt="{{ $activity->title }}"
                             >
 
                         @else
@@ -613,7 +537,7 @@
                         <div class="activity-overlay">
 
                             <span>
-                                {{ $activity['category'] }}
+                                {{ $activity->category }}
                             </span>
 
                         </div>
@@ -625,12 +549,12 @@
                     <div class="activity-content">
 
                         <span class="category">
-                            {{ $activity['category'] }}
+                            {{ $activity->category }}
                         </span>
 
 
                         <h3>
-                            {{ $activity['title'] }}
+                            {{ $activity->title }}
                         </h3>
 
 
@@ -649,7 +573,7 @@
                                     "
                                 >
 
-                                {{ $activity['date'] }}
+                                {{ $activity->date->translatedFormat('l, d F Y') }}
 
                             </span>
 
@@ -667,7 +591,9 @@
                                     "
                                 >
 
-                                {{ $activity['time'] }}
+                                {{ \Carbon\Carbon::parse($activity->start_time)->format('H:i') }}
+                                -
+                                {{ \Carbon\Carbon::parse($activity->end_time)->format('H:i') }}
 
                             </span>
 
@@ -675,37 +601,18 @@
 
 
 
-                        @if (isset($activity['id']))
+                        <a
+                            href="{{ route('activities.show', $activity) }}"
+                            class="activity-link"
+                        >
 
-                            <a
-                                href="{{ route('activities.show', $activity['id']) }}"
-                                class="activity-link"
-                            >
+                            Lihat Detail
 
-                                Lihat Detail
+                            <span>
+                                →
+                            </span>
 
-                                <span>
-                                    →
-                                </span>
-
-                            </a>
-
-                        @else
-
-                            <a
-                                href="{{ route('activities.index') }}"
-                                class="activity-link"
-                            >
-
-                                Lihat Detail
-
-                                <span>
-                                    →
-                                </span>
-
-                            </a>
-
-                        @endif
+                        </a>
 
                     </div>
 
@@ -1816,128 +1723,7 @@
      FOOTER
 ========================================================= --}}
 
-<footer class="footer">
-
-    <div class="container footer-content">
-
-
-        {{-- BRAND --}}
-
-        <div class="footer-brand">
-
-            <div class="footer-logo">
-
-                <div class="footer-logo-icon">
-
-                    <img
-                        src="{{ asset('images/logoTBMfinal.png') }}"
-                        alt="Logo TBM Bintang Raharja"
-                    >
-
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        TBM Bintang Raharja
-                    </strong>
-
-                    <span>
-                        Membaca • Belajar • Berkarya • Bersama
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <p>
-
-                Ruang belajar masyarakat yang hadir untuk
-                menumbuhkan budaya literasi, kreativitas,
-                dan kebersamaan.
-
-            </p>
-
-        </div>
-
-
-
-        {{-- NAVIGASI --}}
-
-        <div class="footer-column">
-
-            <h3>
-                Navigasi
-            </h3>
-
-            <a href="{{ route('home') }}">
-                Beranda
-            </a>
-
-            <a href="{{ route('about') }}">
-                Tentang
-            </a>
-
-            <a href="{{ route('activities.index') }}">
-                Kegiatan
-            </a>
-
-            <a href="{{ route('news.index') }}">
-                Berita
-            </a>
-
-        </div>
-
-
-
-        {{-- INFORMASI --}}
-
-        <div class="footer-column">
-
-            <h3>
-                Jelajahi
-            </h3>
-
-            <a href="{{ route('gallery.index') }}">
-                Galeri
-            </a>
-
-            <a href="{{ route('contact.index') }}">
-                Kontak
-            </a>
-
-            <a href="{{ route('login') }}">
-                Masuk
-            </a>
-
-        </div>
-
-    </div>
-
-
-
-    {{-- FOOTER BOTTOM --}}
-
-    <div class="container footer-bottom">
-
-        <p>
-
-            © {{ date('Y') }}
-            TBM Bintang Raharja.
-            All rights reserved.
-
-        </p>
-
-
-        <span>
-            Dibangun dengan semangat literasi dan kolaborasi.
-        </span>
-
-    </div>
-
-</footer>
+@include('partials.site-footer')
 
 
 
