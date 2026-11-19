@@ -203,7 +203,7 @@
                             @if($activity->image)
 
                                 <img
-                                    src="{{ asset('storage/' . $activity->image) }}"
+                                    src="{{ \Illuminate\Support\Str::startsWith($activity->image, ['http://', 'https://']) ? $activity->image : asset('storage/' . $activity->image) }}"
                                     alt="{{ $activity->title }}"
                                     loading="lazy"
                                 >

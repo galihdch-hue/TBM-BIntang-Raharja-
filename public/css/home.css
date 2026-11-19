@@ -3094,6 +3094,19 @@ a {
     font-size: 26px;
 }
 
+.partner-icon img {
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    border-radius: inherit;
+    object-fit: contain;
+}
+
+.partner-icon > span {
+    color: var(--primary);
+    font-weight: 800;
+}
+
 .partner-card strong {
     position: relative;
     z-index: 2;

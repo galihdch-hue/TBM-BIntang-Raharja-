@@ -18,7 +18,6 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-
     /*
     |--------------------------------------------------------------------------
     | CASTS
@@ -29,11 +28,10 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-            'points'            => 'integer',
+            'password' => 'hashed',
+            'points' => 'integer',
         ];
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -51,11 +49,25 @@ class User extends Authenticatable
         return $this->role === 'pengajar';
     }
 
+    public function isPemilik(): bool
+    {
+        return $this->role === 'pemilik';
+    }
+
+    public function isPengurus(): bool
+    {
+        return $this->role === 'pengurus';
+    }
+
+    public function canManageContent(): bool
+    {
+        return $this->isPemilik() || $this->isPengurus();
+    }
+
     public function isPeserta(): bool
     {
         return $this->role === 'peserta';
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +123,6 @@ class User extends Authenticatable
             'user_material_progress'
         )->wherePivot('status', 'selesai')->withPivot('status', 'completed_at')->withTimestamps();
     }
-
 
     /*
     |--------------------------------------------------------------------------

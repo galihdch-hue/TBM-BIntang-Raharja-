@@ -59,23 +59,18 @@
     <div class="container">
 
         <span class="hero-label">
-            TENTANG KAMI
+            {{ $about['hero']['eyebrow'] }}
         </span>
 
         <h1>
-
-            Mengenal Lebih Dekat
-
+            {{ $about['hero']['title'] }}
             <span>
-                TBM Bintang Raharja
+                {{ $about['hero']['name'] }}
             </span>
-
         </h1>
 
         <p>
-            Mengenal perjalanan, semangat, dan nilai-nilai
-            yang menjadi bagian dari TBM Bintang Raharja
-            dalam mendukung kegiatan literasi dan pembelajaran.
+            {{ $about['hero']['description'] }}
         </p>
 
     </div>
@@ -100,7 +95,7 @@
             <div class="image-placeholder">
 
                 <img
-                    src="{{ asset('images/logoTBMfinal.png') }}"
+                    src="{{ $about['image_urls']['logo'] }}"
                     alt="TBM Bintang Raharja"
                 >
 
@@ -114,27 +109,19 @@
         <div class="about-text">
 
             <span class="section-label">
-                TENTANG TBM
+                {{ $about['overview']['label'] }}
             </span>
 
             <h2>
-                Tempat untuk
+                {{ $about['overview']['title_prefix'] }}
                 <span>
-                    Belajar dan Berkarya
+                    {{ $about['overview']['title_highlight'] }}
                 </span>
             </h2>
 
-            <p>
-                TBM Bintang Raharja merupakan ruang belajar masyarakat
-                yang berfokus pada kegiatan literasi, pendidikan, dan
-                pengembangan kreativitas anak-anak.
-            </p>
-
-            <p>
-                Melalui kegiatan yang dilaksanakan bersama kakak pengajar,
-                relawan, dan berbagai pihak, anak-anak mendapatkan kesempatan
-                untuk belajar, membaca, bermain, dan berkarya bersama.
-            </p>
+            @foreach ($about['overview']['paragraphs'] as $paragraph)
+                <p>{{ $paragraph }}</p>
+            @endforeach
 
         </div>
 
@@ -155,16 +142,15 @@
         <div class="section-heading">
 
             <span>
-                Tokoh di Balik TBM
+                {{ $about['biography']['section_title'] }}
             </span>
 
             <h2>
-                Mengenal Ibu Murni Setianingsih
+                {{ $about['biography']['name'] }}
             </h2>
 
             <p>
-                Sosok yang turut menggerakkan kegiatan literasi
-                dan pendidikan masyarakat melalui TBM Bintang Raharja.
+                {{ $about['biography']['summary'] }}
             </p>
 
         </div>
@@ -180,8 +166,8 @@
                 <div class="photo-frame">
 
                     <img
-                        src="{{ asset('images/bu murni.jpeg') }}"
-                        alt="Ibu Murni Setianingsih"
+                        src="{{ $about['image_urls']['biography'] }}"
+                        alt="{{ $about['biography']['person_name'] }}"
                     >
 
                 </div>
@@ -190,11 +176,11 @@
                 <div class="photo-caption">
 
                     <strong>
-                        Ibu Murni Setianingsih, S.Pd.
+                        {{ $about['biography']['person_name'] }}
                     </strong>
 
                     <span>
-                        Ketua TBM Bintang Raharja
+                        {{ $about['biography']['role'] }}
                     </span>
 
                 </div>
@@ -208,52 +194,16 @@
             <div class="biography-content">
 
                 <span class="biography-label">
-                    BIOGRAFI
+                    {{ $about['biography']['label'] }}
                 </span>
 
                 <h3>
-                    Menggerakkan Literasi dari Lingkungan Masyarakat
+                    {{ $about['biography']['title'] }}
                 </h3>
 
-                <p>
-                    Ibu Murni Setianingsih merupakan sosok yang
-                    terlibat dalam berdirinya dan berkembangnya
-                    TBM Bintang Raharja di Desa Karangharja,
-                    Kecamatan Cikarang Utara, Kabupaten Bekasi.
-                </p>
-
-                <p>
-                    Gagasan tersebut berawal dari kepedulian terhadap
-                    anak-anak di lingkungan sekitar. Pada masa pandemi,
-                    ketika kegiatan belajar tatap muka di sekolah
-                    terhenti, beliau berinisiatif mengajak anak-anak
-                    untuk tetap belajar dan membaca bersama.
-                </p>
-
-                <p>
-                    Salah satu langkah awal yang dilakukan adalah
-                    menggunakan gerobak untuk berkeliling
-                    mengumpulkan anak-anak agar berkumpul, membaca,
-                    dan melakukan berbagai kegiatan edukatif.
-                </p>
-
-                <p>
-                    Dari gerakan sederhana tersebut, kegiatan literasi
-                    terus berkembang dan melibatkan masyarakat sekitar.
-                    TBM Bintang Raharja kemudian berkembang menjadi
-                    ruang belajar yang tidak hanya berfokus pada
-                    membaca, tetapi juga pendidikan, keterampilan,
-                    kreativitas, dan pemberdayaan masyarakat.
-                </p>
-
-                <p>
-                    Dalam perkembangannya, Ibu Murni juga aktif
-                    mendorong program Rumah Pendidikan dan Keterampilan
-                    atau Rumah Dilan. Program tersebut mencakup kegiatan
-                    literasi anak, pelatihan keterampilan bagi ibu-ibu,
-                    kegiatan menari, hingga pelatihan komputer bagi
-                    anak-anak.
-                </p>
+                @foreach ($about['biography']['paragraphs'] as $paragraph)
+                    <p>{{ $paragraph }}</p>
+                @endforeach
 
 
                 {{-- HIGHLIGHT ICON CUSTOM --}}
@@ -272,12 +222,11 @@
                     <div>
 
                         <strong>
-                            Membangun dari hal sederhana
+                            {{ $about['biography']['highlight_title'] }}
                         </strong>
 
                         <p>
-                            Semangat literasi tumbuh dari kepedulian
-                            terhadap lingkungan dan kebutuhan masyarakat.
+                            {{ $about['biography']['highlight_content'] }}
                         </p>
 
                     </div>
@@ -321,14 +270,11 @@
             </span>
 
             <h2>
-                Membangun Generasi
-                yang Gemar Belajar
+                {{ $about['vision']['title'] }}
             </h2>
 
             <p>
-                “Menjadi ruang literasi dan pembelajaran yang inspiratif
-                untuk membentuk generasi yang berpengetahuan, kreatif,
-                adaptif terhadap teknologi, dan siap menghadapi masa depan.”
+                {{ $about['vision']['content'] }}
             </p>
 
         </div>
@@ -353,31 +299,13 @@
             </span>
 
             <h2>
-                Membuka Ruang
-                untuk Berkembang
+                {{ $about['mission']['title'] }}
             </h2>
 
             <p>
-
-                1. Menumbuhkan budaya membaca dan belajar melalui kegiatan
-                literasi yang menarik, interaktif, dan relevan dengan
-                perkembangan zaman.
-                <br>
-
-                2. Meningkatkan literasi digital dan teknologi agar
-                anak-anak dan masyarakat mampu memanfaatkan teknologi
-                secara positif, aman, dan produktif.
-                <br>
-
-                3. Mengembangkan kreativitas dan keterampilan melalui
-                kegiatan edukatif, seni, keterampilan, dan pembelajaran
-                berbasis praktik.
-                <br>
-
-                4. Mendorong kemandirian dan potensi masyarakat dengan
-                menyediakan ruang untuk belajar, berkarya, berbagi,
-                dan mengembangkan kemampuan.
-
+                @foreach ($about['mission']['items'] as $mission)
+                    {{ $loop->iteration }}. {{ $mission }}@if (! $loop->last)<br><br>@endif
+                @endforeach
             </p>
 
         </div>
@@ -404,12 +332,11 @@
             </span>
 
             <h2>
-                Sejarah TBM Bintang Raharja
+                {{ $about['history']['title'] }}
             </h2>
 
             <p>
-                Perjalanan TBM dalam membangun ruang
-                literasi dan pembelajaran bagi masyarakat.
+                {{ $about['history']['description'] }}
             </p>
 
         </div>
@@ -417,7 +344,7 @@
 
         <div class="timeline">
 
-            @foreach ($history as $item)
+            @foreach ($about['history']['items'] as $item)
 
                 <div class="timeline-item">
 
@@ -468,12 +395,11 @@
             </span>
 
             <h2>
-                Apa yang Kami Bangun
+                {{ $about['values']['title'] }}
             </h2>
 
             <p>
-                Nilai yang menjadi dasar dalam setiap
-                kegiatan TBM Bintang Raharja.
+                {{ $about['values']['description'] }}
             </p>
 
         </div>
@@ -499,7 +425,7 @@
 
         <div class="values-grid">
 
-            @foreach ($values as $index => $value)
+            @foreach ($about['values']['items'] as $index => $value)
 
                 <div class="value-card">
 
@@ -552,13 +478,11 @@
         </span>
 
         <h2>
-            Bersama Membaca,
-            Bersama Tumbuh.
+            {{ $about['cta']['title'] }}
         </h2>
 
         <p>
-            Mari menjadi bagian dari perjalanan
-            literasi dan pembelajaran bersama.
+            {{ $about['cta']['description'] }}
         </p>
 
         <a

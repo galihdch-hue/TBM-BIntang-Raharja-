@@ -98,7 +98,7 @@
                 @if($news->image)
 
                     <img
-                        src="{{ asset('storage/' . $news->image) }}"
+                        src="{{ \Illuminate\Support\Str::startsWith($news->image, ['http://', 'https://']) ? $news->image : asset('storage/' . $news->image) }}"
                         alt="{{ $news->title }}"
                     >
 

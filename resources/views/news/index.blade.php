@@ -250,7 +250,7 @@
                             @if($item->image)
 
                                 <img
-                                    src="{{ asset('storage/' . $item->image) }}"
+                                    src="{{ \Illuminate\Support\Str::startsWith($item->image, ['http://', 'https://']) ? $item->image : asset('storage/' . $item->image) }}"
                                     alt="{{ $item->title }}"
                                     loading="lazy"
                                 >

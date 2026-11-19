@@ -9,11 +9,11 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>TBM Bintang Raharja</title>
+    <title>{{ $home['hero']['title'] }} {{ $home['hero']['highlight'] }} - TBM Bintang Raharja</title>
 
     <meta
         name="description"
-        content="TBM Bintang Raharja - Ruang belajar, membaca, berkarya, dan tumbuh bersama masyarakat."
+        content="{{ $home['hero']['description'] }}"
     >
 
     <link
@@ -46,43 +46,6 @@
     class="cursor-glow"
     aria-hidden="true"
 ></div>
-
-
-{{-- =========================================================
-     CUSTOM ICON MAPPING
-========================================================= --}}
-
-@php
-
-    /*
-    |--------------------------------------------------------------------------
-    | ICON STATISTIK
-    |--------------------------------------------------------------------------
-    */
-
-    $statIcons = [
-        'Buku'        => 'stack-of-books.png',
-        'Peserta'     => 'audience.png',
-        'Kegiatan'    => 'calendar.png',
-        'Kolaborasi'  => 'handshake (1).png',
-    ];
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | ICON NILAI
-    |--------------------------------------------------------------------------
-    */
-
-    $valueIcons = [
-        'Literasi'      => 'literasi.png',
-        'Kreativitas'   => 'kreativitas.png',
-        'Kebersamaan'   => 'kebersamaan.png',
-        'Pertumbuhan'   => 'pertumbuhan.png',
-    ];
-
-@endphp
-
 
 
 {{-- =========================================================
@@ -122,28 +85,20 @@
                     style="width:22px;height:22px;object-fit:contain;"
                 >
 
-                RUANG BELAJAR • RUANG TUMBUH
+                {{ $home['hero']['label'] }}
 
             </span>
 
 
             <h1>
-
-                Bersama Membaca,
-
-                <span>
-                    Bersama Tumbuh.
-                </span>
-
+                {{ $home['hero']['title'] }}
+                <span>{{ $home['hero']['highlight'] }}</span>
             </h1>
 
 
             <p>
 
-                TBM Bintang Raharja hadir sebagai ruang belajar
-                masyarakat yang mendorong budaya literasi,
-                kreativitas, kebersamaan, dan pertumbuhan
-                generasi melalui kegiatan yang positif.
+                {{ $home['hero']['description'] }}
 
             </p>
 
@@ -155,7 +110,7 @@
                     class="button primary"
                 >
 
-                    Jelajahi Kegiatan
+                    {{ $home['hero']['primary_label'] }}
 
                     <span>
                         →
@@ -169,7 +124,7 @@
                     class="button secondary"
                 >
 
-                    Kenali TBM
+                    {{ $home['hero']['secondary_label'] }}
 
                 </a>
 
@@ -180,100 +135,20 @@
             {{-- HERO MINI INFORMATION --}}
 
             <div class="hero-mini-info">
-
-
-                {{-- LITERASI --}}
-
-                <div class="mini-info-item">
-
-                    <div class="activity-placeholder">
-
-                        <img
-                            src="{{ asset('images/books.png') }}"
-                            alt="Icon Literasi"
-                        >
-
+                @foreach ($home['hero']['focus'] as $index => $focus)
+                    @if ($index > 0)
+                        <div class="mini-info-divider"></div>
+                    @endif
+                    <div class="mini-info-item">
+                        <div class="activity-placeholder">
+                            <img src="{{ asset('images/'.$focus['icon']) }}" alt="">
+                        </div>
+                        <div>
+                            <span>{{ $focus['label'] }}</span>
+                            <b>{{ $focus['value'] }}</b>
+                        </div>
                     </div>
-
-
-                    <div>
-
-                        <span>
-                            Fokus
-                        </span>
-
-                        <b>
-                            Literasi
-                        </b>
-
-                    </div>
-
-                </div>
-
-
-                <div class="mini-info-divider"></div>
-
-
-                {{-- PERTUMBUHAN --}}
-
-                <div class="mini-info-item">
-
-                    <div class="activity-placeholder">
-
-                        <img
-                            src="{{ asset('images/growth.png') }}"
-                            alt="Icon Pertumbuhan"
-                        >
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            Semangat
-                        </span>
-
-                        <b>
-                            Bertumbuh
-                        </b>
-
-                    </div>
-
-                </div>
-
-
-                <div class="mini-info-divider"></div>
-
-
-                {{-- KEBERSAMAAN --}}
-
-                <div class="mini-info-item">
-
-                    <div class="activity-placeholder">
-
-                        <img
-                            src="{{ asset('images/handshake.png') }}"
-                            alt="Icon Kebersamaan"
-                        >
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            Berbasis
-                        </span>
-
-                        <b>
-                            Kebersamaan
-                        </b>
-
-                    </div>
-
-                </div>
-
+                @endforeach
             </div>
 
         </div>
@@ -293,7 +168,7 @@
 
 
                 <img
-                    src="{{ asset('images/tentang.jpeg') }}"
+                    src="{{ $home['image_urls']['hero'] }}"
                     alt="Kegiatan TBM Bintang Raharja"
                 >
 
@@ -320,7 +195,7 @@
 
         <div class="stats-grid">
 
-            @foreach ($stats as $index => $stat)
+            @foreach ($home['stats'] as $index => $stat)
 
                 <div
                     class="stat-card reveal"
@@ -330,7 +205,7 @@
                     <div class="stat-icon">
 
                         <img
-                            src="{{ asset('images/' . ($statIcons[$stat['label']] ?? 'books.png')) }}"
+                            src="{{ asset('images/'.$stat['icon']) }}"
                             alt="Icon {{ $stat['label'] }}"
                             style="
                                 width:70%;
@@ -382,7 +257,7 @@
             >
 
                 <span>
-                    TENTANG GERAKAN
+                    {{ $home['intro']['label'] }}
                 </span>
 
                 <div class="intro-line"></div>
@@ -396,24 +271,14 @@
             >
 
                 <h2>
-
-                    Sebuah ruang kecil
-                    untuk mimpi yang
-
-                    <span>
-                        besar.
-                    </span>
-
+                    {{ $home['intro']['title'] }}
+                    <span>{{ $home['intro']['highlight'] }}</span>
                 </h2>
 
 
                 <p>
 
-                    Kami percaya bahwa perubahan tidak selalu
-                    dimulai dari sesuatu yang besar. Kadang,
-                    semuanya dimulai dari sebuah buku, sebuah
-                    kegiatan sederhana, dan seseorang yang mau
-                    berbagi ilmu.
+                    {{ $home['intro']['description'] }}
 
                 </p>
 
@@ -423,7 +288,7 @@
                     class="text-link"
                 >
 
-                    Pelajari perjalanan kami
+                    {{ $home['intro']['link_label'] }}
 
                     <span>
                         →
@@ -460,26 +325,19 @@
             <div>
 
                 <span class="section-label">
-                    Kegiatan
+                    {{ $home['activities']['label'] }}
                 </span>
 
 
                 <h2>
-
-                    Belajar Tidak Harus
-
-                    <span>
-                        Membosankan.
-                    </span>
-
+                    {{ $home['activities']['title'] }}
+                    <span>{{ $home['activities']['highlight'] }}</span>
                 </h2>
 
 
                 <p>
 
-                    Berbagai kegiatan yang dirancang untuk
-                    menghadirkan pengalaman belajar yang
-                    menyenangkan dan bermakna.
+                    {{ $home['activities']['description'] }}
 
                 </p>
 
@@ -490,7 +348,7 @@
                 href="{{ route('activities.index') }}"
                 class="see-all"
             >
-                Lihat Semua Kegiatan →
+                {{ $home['activities']['link_label'] }} →
             </a>
 
         </div>
@@ -511,7 +369,7 @@
                         @if ($activity->image)
 
                             <img
-                                src="{{ asset('storage/' . $activity->image) }}"
+                                src="{{ \Illuminate\Support\Str::startsWith($activity->image, ['http://', 'https://']) ? $activity->image : asset('storage/' . $activity->image) }}"
                                 alt="{{ $activity->title }}"
                             >
 
@@ -625,7 +483,7 @@
                     <div class="empty-icon">
 
                         <img
-                            src="{{ asset('images/empty.png') }}"
+                            src="{{ asset('images/books.png') }}"
                             alt="Belum ada kegiatan"
                             style="
                                 width:55px;
@@ -679,7 +537,7 @@
             <div class="about-image-wrapper">
 
                 <img
-                    src="{{ asset('images/tentang.jpeg') }}"
+                    src="{{ $home['image_urls']['about'] }}"
                     alt="Kegiatan TBM Bintang Raharja"
                 >
 
@@ -696,117 +554,33 @@
             data-delay="150"
         >
 
-            <span class="section-label">
-                Tentang Kami
-            </span>
+            <span class="section-label">{{ $home['about']['label'] }}</span>
 
 
             <h2>
-
-                Tumbuh Bersama
-
-                <span>
-                    Melalui Literasi.
-                </span>
+                {{ $home['about']['title'] }}
+                <span>{{ $home['about']['highlight'] }}</span>
 
             </h2>
 
 
-            <p>
-
-                TBM Bintang Raharja merupakan ruang belajar
-                masyarakat yang berfokus pada kegiatan literasi,
-                pendidikan, dan pengembangan kreativitas
-                anak-anak.
-
-            </p>
-
-
-            <p>
-
-                Melalui kegiatan bersama kakak pengajar,
-                relawan, dan berbagai pihak yang berkolaborasi,
-                anak-anak mendapatkan kesempatan untuk belajar,
-                membaca, bermain, dan berkarya bersama.
-
-            </p>
-
-
+            @foreach ($home['about']['paragraphs'] as $paragraph)
+                <p>{{ $paragraph }}</p>
+            @endforeach
 
             <div class="about-points">
-
-
-                <div class="about-point">
-
-                    <span>
-
-                        <img
-                            src="{{ asset('images/book.png') }}"
-                            alt="Check"
-                            style="
-                                width:18px;
-                                height:18px;
-                                object-fit:contain;
-                            "
-                        >
-
-                    </span>
-
-                    <p>
-                        Lingkungan belajar yang positif
-                    </p>
-
-                </div>
-
-
-
-                <div class="about-point">
-
-                    <span>
-
-                        <img
-                            src="{{ asset('images/light bulb.png') }}"
-                            alt="Check"
-                            style="
-                                width:18px;
-                                height:18px;
-                                object-fit:contain;
-                            "
-                        >
-
-                    </span>
-
-                    <p>
-                        Kegiatan literasi dan kreativitas
-                    </p>
-
-                </div>
-
-
-
-                <div class="about-point">
-
-                    <span>
-
-                        <img
-                            src="{{ asset('images/handshake (2).png') }}"
-                            alt="Check"
-                            style="
-                                width:18px;
-                                height:18px;
-                                object-fit:contain;
-                            "
-                        >
-
-                    </span>
-
-                    <p>
-                        Kolaborasi bersama masyarakat
-                    </p>
-
-                </div>
-
-
+                @foreach ($home['about']['points'] as $index => $point)
+                    <div class="about-point">
+                        <span>
+                            <img
+                                src="{{ asset('images/'.($home['about']['point_icons'][$index] ?? 'book.png')) }}"
+                                alt=""
+                                style="width:18px;height:18px;object-fit:contain;"
+                            >
+                        </span>
+                        <p>{{ $point }}</p>
+                    </div>
+                @endforeach
             </div>
 
 
@@ -815,7 +589,7 @@
                 class="button primary"
             >
 
-                Kenali TBM
+                {{ $home['about']['link_label'] }}
 
                 <span>
                     →
@@ -844,181 +618,32 @@
             class="section-header center reveal"
         >
 
-            <span class="section-label">
-                Sejarah Kami
-            </span>
-
+            <span class="section-label">{{ $home['history']['label'] }}</span>
 
             <h2>
-
-                Dari Baling-Baling
-
-                <span>
-                    hingga Bintang Raharja.
-                </span>
-
+                {{ $home['history']['title'] }}
+                <span>{{ $home['history']['highlight'] }}</span>
             </h2>
 
-
-            <p>
-
-                Setiap perjalanan memiliki awal. Inilah bagian
-                dari perjalanan yang membentuk identitas
-                TBM Bintang Raharja.
-
-            </p>
+            <p>{{ $home['history']['description'] }}</p>
 
         </div>
 
 
 
         <div class="history-timeline">
-
-
-            <div class="history-item reveal">
-
-                <div class="history-marker">
-                    <span>01</span>
+            @foreach ($home['history']['items'] as $index => $item)
+                <div class="history-item reveal" data-delay="{{ $index * 100 }}">
+                    <div class="history-marker">
+                        <span>{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                    </div>
+                    <div class="history-content">
+                        <span class="history-year">{{ $item['year'] }}</span>
+                        <h3>{{ $item['title'] }}</h3>
+                        <p>{{ $item['description'] }}</p>
+                    </div>
                 </div>
-
-
-                <div class="history-content">
-
-                    <span class="history-year">
-                        Awal Perjalanan
-                    </span>
-
-
-                    <h3>
-                        Berawal dari Semangat Literasi
-                    </h3>
-
-
-                    <p>
-
-                        TBM Bintang Raharja berawal dari sebuah
-                        kegiatan dan kepedulian terhadap pentingnya
-                        pendidikan serta budaya membaca di lingkungan
-                        masyarakat.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="history-item reveal"
-                data-delay="100"
-            >
-
-                <div class="history-marker">
-                    <span>02</span>
-                </div>
-
-
-                <div class="history-content">
-
-                    <span class="history-year">
-                        Fase Awal
-                    </span>
-
-
-                    <h3>
-                        Baling-Baling
-                    </h3>
-
-
-                    <p>
-
-                        Pada masa awal perkembangannya, gerakan ini
-                        dikenal dengan nama Baling-Baling. Nama tersebut
-                        menjadi bagian penting dari perjalanan awal
-                        sebelum berkembang menjadi TBM Bintang Raharja.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="history-item reveal"
-                data-delay="200"
-            >
-
-                <div class="history-marker">
-                    <span>03</span>
-                </div>
-
-
-                <div class="history-content">
-
-                    <span class="history-year">
-                        Perkembangan
-                    </span>
-
-
-                    <h3>
-                        Berkembang Menjadi Ruang Belajar
-                    </h3>
-
-
-                    <p>
-
-                        Seiring berkembangnya kegiatan, ruang ini
-                        mulai menjadi tempat bagi anak-anak dan
-                        masyarakat untuk membaca, belajar, bermain,
-                        serta mengembangkan kreativitas.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="history-item reveal"
-                data-delay="300"
-            >
-
-                <div class="history-marker">
-                    <span>04</span>
-                </div>
-
-
-                <div class="history-content">
-
-                    <span class="history-year">
-                        TBM Bintang Raharja
-                    </span>
-
-
-                    <h3>
-                        Tumbuh Bersama Masyarakat
-                    </h3>
-
-
-                    <p>
-
-                        Perjalanan tersebut kemudian berkembang
-                        menjadi TBM Bintang Raharja sebagai ruang
-                        belajar masyarakat yang membawa semangat
-                        membaca, belajar, berkarya, dan tumbuh bersama.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
+            @endforeach
         </div>
 
     </div>
@@ -1040,201 +665,25 @@
             class="section-header center reveal"
         >
 
-            <span class="section-label">
-                Nilai Kami
-            </span>
-
-
-            <h2>
-                Bukan Sekadar Tempat Membaca.
-            </h2>
-
-
-            <p>
-
-                Kami membangun ruang yang mendorong
-                anak-anak untuk belajar, berinteraksi,
-                dan berkembang.
-
-            </p>
+            <span class="section-label">{{ $home['values']['label'] }}</span>
+            <h2>{{ $home['values']['title'] }}</h2>
+            <p>{{ $home['values']['description'] }}</p>
 
         </div>
 
 
 
         <div class="values-grid">
-
-
-            {{-- LITERASI --}}
-
-            <div class="value-card reveal">
-
-                <div class="value-icon">
-
-                    <img
-                        src="{{ asset('images/literasi.png') }}"
-                        alt="Literasi"
-                        style="
-                            width:65%;
-                            height:65%;
-                            object-fit:contain;
-                        "
-                    >
-
+            @foreach ($home['values']['items'] as $index => $value)
+                <div class="value-card reveal" data-delay="{{ $index * 100 }}">
+                    <div class="value-icon">
+                        <img src="{{ asset('images/'.$value['icon']) }}" alt="" style="width:65%;height:65%;object-fit:contain;">
+                    </div>
+                    <span class="value-number">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                    <h3>{{ $value['title'] }}</h3>
+                    <p>{{ $value['description'] }}</p>
                 </div>
-
-
-                <span class="value-number">
-                    01
-                </span>
-
-
-                <h3>
-                    Literasi
-                </h3>
-
-
-                <p>
-
-                    Menumbuhkan kebiasaan membaca dan
-                    meningkatkan minat belajar melalui
-                    kegiatan yang menyenangkan.
-
-                </p>
-
-            </div>
-
-
-
-            {{-- KREATIVITAS --}}
-
-            <div
-                class="value-card reveal"
-                data-delay="100"
-            >
-
-                <div class="value-icon">
-
-                    <img
-                        src="{{ asset('images/kreativitas.png') }}"
-                        alt="Kreativitas"
-                        style="
-                            width:65%;
-                            height:65%;
-                            object-fit:contain;
-                        "
-                    >
-
-                </div>
-
-
-                <span class="value-number">
-                    02
-                </span>
-
-
-                <h3>
-                    Kreativitas
-                </h3>
-
-
-                <p>
-
-                    Memberikan ruang bagi anak-anak untuk
-                    bereksperimen, berkarya, dan
-                    mengembangkan ide.
-
-                </p>
-
-            </div>
-
-
-
-            {{-- KEBERSAMAAN --}}
-
-            <div
-                class="value-card reveal"
-                data-delay="200"
-            >
-
-                <div class="value-icon">
-
-                    <img
-                        src="{{ asset('images/kebersamaan.png') }}"
-                        alt="Kebersamaan"
-                        style="
-                            width:65%;
-                            height:65%;
-                            object-fit:contain;
-                        "
-                    >
-
-                </div>
-
-
-                <span class="value-number">
-                    03
-                </span>
-
-
-                <h3>
-                    Kebersamaan
-                </h3>
-
-
-                <p>
-
-                    Membangun lingkungan belajar yang
-                    terbuka, ramah, dan saling mendukung.
-
-                </p>
-
-            </div>
-
-
-
-            {{-- PERTUMBUHAN --}}
-
-            <div
-                class="value-card reveal"
-                data-delay="300"
-            >
-
-                <div class="value-icon">
-
-                    <img
-                        src="{{ asset('images/pertumbuhan.png') }}"
-                        alt="Pertumbuhan"
-                        style="
-                            width:65%;
-                            height:65%;
-                            object-fit:contain;
-                        "
-                    >
-
-                </div>
-
-
-                <span class="value-number">
-                    04
-                </span>
-
-
-                <h3>
-                    Pertumbuhan
-                </h3>
-
-
-                <p>
-
-                    Mendukung perkembangan pengetahuan,
-                    keterampilan, dan karakter anak-anak.
-
-                </p>
-
-            </div>
-
-
+            @endforeach
         </div>
 
     </div>
@@ -1256,30 +705,23 @@
 
             <div class="build-heading reveal">
 
-                <span class="section-label">
-                    Dampak
-                </span>
+                <span class="section-label">{{ $home['impact']['label'] }}</span>
 
 
                 <h2>
 
-                    Ruang yang
-
+                    {{ $home['impact']['title'] }}
                     <span>
-                        Menghidupkan
+                        {{ $home['impact']['highlight'] }}
                     </span>
-
-                    Potensi.
+                    {{ $home['impact']['title_suffix'] }}
 
                 </h2>
 
 
                 <p>
 
-                    Setiap kegiatan dirancang untuk memberikan
-                    pengalaman yang tidak hanya menyenangkan,
-                    tetapi juga memberikan ruang bagi anak-anak
-                    untuk berkembang.
+                    {{ $home['impact']['description'] }}
 
                 </p>
 
@@ -1288,111 +730,15 @@
 
 
             <div class="build-list">
-
-
-                <div
-                    class="build-item reveal"
-                    data-delay="0"
-                >
-
-                    <span class="build-icon">
-                        01
-                    </span>
-
-                    <div>
-
-                        <h3>
-                            Membaca
-                        </h3>
-
-                        <p>
-                            Mengenalkan dan membangun kebiasaan
-                            membaca sejak dini.
-                        </p>
-
+                @foreach ($home['impact']['items'] as $index => $item)
+                    <div class="build-item reveal" data-delay="{{ $index * 100 }}">
+                        <span class="build-icon">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                        <div>
+                            <h3>{{ $item['title'] }}</h3>
+                            <p>{{ $item['description'] }}</p>
+                        </div>
                     </div>
-
-                </div>
-
-
-
-                <div
-                    class="build-item reveal"
-                    data-delay="100"
-                >
-
-                    <span class="build-icon">
-                        02
-                    </span>
-
-                    <div>
-
-                        <h3>
-                            Belajar
-                        </h3>
-
-                        <p>
-                            Menciptakan suasana belajar yang
-                            terbuka dan menyenangkan.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <div
-                    class="build-item reveal"
-                    data-delay="200"
-                >
-
-                    <span class="build-icon">
-                        03
-                    </span>
-
-                    <div>
-
-                        <h3>
-                            Berkarya
-                        </h3>
-
-                        <p>
-                            Memberikan ruang untuk menghasilkan
-                            karya dan mengembangkan kreativitas.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <div
-                    class="build-item reveal"
-                    data-delay="300"
-                >
-
-                    <span class="build-icon">
-                        04
-                    </span>
-
-                    <div>
-
-                        <h3>
-                            Berkolaborasi
-                        </h3>
-
-                        <p>
-                            Menghubungkan anak-anak, relawan,
-                            masyarakat, dan berbagai pihak.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
+                @endforeach
             </div>
 
         </div>
@@ -1416,27 +762,18 @@
             class="section-header center reveal"
         >
 
-            <span class="section-label">
-                Milestone
-            </span>
+            <span class="section-label">{{ $home['milestones']['label'] }}</span>
 
 
             <h2>
-
-                Langkah yang Terus
-
-                <span>
-                    Bertumbuh.
-                </span>
-
+                {{ $home['milestones']['title'] }}
+                <span>{{ $home['milestones']['highlight'] }}</span>
             </h2>
 
 
             <p>
 
-                Perjalanan TBM Bintang Raharja dibangun
-                dari langkah-langkah kecil yang dilakukan
-                secara bersama-sama.
+                {{ $home['milestones']['description'] }}
 
             </p>
 
@@ -1445,108 +782,15 @@
 
 
         <div class="milestone-grid">
-
-
-            <div class="milestone-card reveal">
-
-                <span class="milestone-number">
-                    01
-                </span>
-
-                <div>
-
-                    <h3>
-                        Memulai Gerakan
-                    </h3>
-
-                    <p>
-                        Membangun ruang awal untuk kegiatan
-                        belajar dan literasi masyarakat.
-                    </p>
-
+            @foreach ($home['milestones']['items'] as $index => $item)
+                <div class="milestone-card reveal" data-delay="{{ $index * 100 }}">
+                    <span class="milestone-number">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                    <div>
+                        <h3>{{ $item['title'] }}</h3>
+                        <p>{{ $item['description'] }}</p>
+                    </div>
                 </div>
-
-            </div>
-
-
-
-            <div
-                class="milestone-card reveal"
-                data-delay="100"
-            >
-
-                <span class="milestone-number">
-                    02
-                </span>
-
-                <div>
-
-                    <h3>
-                        Mengembangkan Kegiatan
-                    </h3>
-
-                    <p>
-                        Menghadirkan kegiatan membaca, belajar,
-                        bermain, dan berkarya.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="milestone-card reveal"
-                data-delay="200"
-            >
-
-                <span class="milestone-number">
-                    03
-                </span>
-
-                <div>
-
-                    <h3>
-                        Memperluas Kolaborasi
-                    </h3>
-
-                    <p>
-                        Membangun hubungan dengan relawan,
-                        masyarakat, dan berbagai pihak.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="milestone-card reveal"
-                data-delay="300"
-            >
-
-                <span class="milestone-number">
-                    04
-                </span>
-
-                <div>
-
-                    <h3>
-                        Tumbuh Bersama
-                    </h3>
-
-                    <p>
-                        Terus berkembang sebagai ruang belajar
-                        dan berkarya bagi masyarakat.
-                    </p>
-
-                </div>
-
-            </div>
-
-
+            @endforeach
         </div>
 
     </div>
@@ -1568,67 +812,29 @@
             class="section-header center reveal"
         >
 
-            <span class="section-label">
-                Kolaborasi
-            </span>
-
-
-            <h2>
-                Bersama Membangun Generasi.
-            </h2>
-
-
-            <p>
-
-                TBM Bintang Raharja tumbuh melalui
-                kolaborasi dengan berbagai pihak.
-
-            </p>
+            <span class="section-label">{{ $home['partners']['label'] }}</span>
+            <h2>{{ $home['partners']['title'] }}</h2>
+            <p>{{ $home['partners']['description'] }}</p>
 
         </div>
 
 
 
-        @php
-    $partnerIcons = [
-        'President University.jpeg',
-        'naresuan university.jpeg',
-        'Universiti Utara Malaysia.png',
-        'Yayasan Bersatu Membangun Indonesia.jpeg',
-    ];
-@endphp
-
-<div class="partners-grid">
-
-    @foreach ($partners as $index => $partner)
-
-        <div
-            class="partner-card reveal"
-            data-delay="{{ $index * 100 }}"
-        >
-
-            <div class="partner-icon">
-
-                <img
-                    src="{{ asset('images/' . ($partnerIcons[$index] ?? 'default-partner.png')) }}"
-                    alt="{{ $partner }}"
-                >
-
-            </div>
-
-            <strong>
-                {{ $partner }}
-            </strong>
-
-            <span>
-                Partner & Kolaborator
-            </span>
-
+        <div class="partners-grid">
+            @foreach ($home['partners']['items'] as $index => $partner)
+                <div class="partner-card reveal" data-delay="{{ $index * 100 }}">
+                    <div class="partner-icon">
+                        @if (! empty($partner['icon_url']))
+                            <img src="{{ $partner['icon_url'] }}" alt="Logo {{ $partner['name'] }}" loading="lazy">
+                        @else
+                            <span aria-hidden="true">{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($partner['name'], 0, 1)) }}</span>
+                        @endif
+                    </div>
+                    <strong>{{ $partner['name'] }}</strong>
+                    <span>Partner &amp; Kolaborator</span>
+                </div>
+            @endforeach
         </div>
-
-    @endforeach
-
-    </div>
 
 </section>
 
@@ -1660,28 +866,24 @@
                 "
             >
 
-            TBM BINTANG RAHARJA
+            {{ $home['cta']['eyebrow'] }}
 
         </span>
 
 
         <h2>
 
-            Satu Buku.
-            Satu Ide.
-
+            {{ $home['cta']['title_first'] }}
+            {{ $home['cta']['title_second'] }}
             <br>
-
-            Satu Langkah Menuju Masa Depan.
+            {{ $home['cta']['title_third'] }}
 
         </h2>
 
 
         <p>
 
-            Bersama membaca, belajar, berkarya,
-            dan menciptakan ruang tumbuh untuk
-            generasi yang lebih baik.
+            {{ $home['cta']['description'] }}
 
         </p>
 
@@ -1693,7 +895,7 @@
                 class="button primary"
             >
 
-                Lihat Kegiatan
+                {{ $home['cta']['activities_label'] }}
 
                 <span>
                     →
@@ -1707,7 +909,7 @@
                 class="button secondary"
             >
 
-                Hubungi Kami
+                {{ $home['cta']['contact_label'] }}
 
             </a>
 

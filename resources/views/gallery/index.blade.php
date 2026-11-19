@@ -287,6 +287,12 @@
 
                         @foreach($galleries as $index => $gallery)
 
+                            @php
+                                $galleryImage = \Illuminate\Support\Str::startsWith($gallery->image, ['http://', 'https://'])
+                                    ? $gallery->image
+                                    : asset('storage/'.$gallery->image);
+                            @endphp
+
                             <article
                                 class="gallery-card reveal"
                                 style="--card-delay: {{ min($index * 0.08, 0.5) }}s;"
@@ -294,14 +300,16 @@
 
                                 <div
                                     class="gallery-image"
-                                    onclick="openLightbox(
-                                        '{{ addslashes($gallery->image) }}',
-                                        '{{ addslashes($gallery->title) }}'
-                                    )"
+                                    data-lightbox-trigger
+                                    data-image="{{ $galleryImage }}"
+                                    data-title="{{ $gallery->title }}"
+                                    role="button"
+                                    tabindex="0"
+                                    aria-label="Lihat foto {{ $gallery->title }}"
                                 >
 
                                     <img
-                                        src="{{ $gallery->image }}"
+                                        src="{{ $galleryImage }}"
                                         alt="{{ $gallery->title }}"
                                         loading="lazy"
                                     >
@@ -381,10 +389,9 @@
                                     <button
                                         type="button"
                                         class="card-action"
-                                        onclick="openLightbox(
-                                            '{{ addslashes($gallery->image) }}',
-                                            '{{ addslashes($gallery->title) }}'
-                                        )"
+                                        data-lightbox-trigger
+                                        data-image="{{ $galleryImage }}"
+                                        data-title="{{ $gallery->title }}"
                                     >
 
                                         <span>
@@ -659,6 +666,27 @@
             document.body.classList.add('no-scroll');
 
         }
+
+        document
+            .querySelectorAll('[data-lightbox-trigger]')
+            .forEach((trigger) => {
+                trigger.addEventListener('click', () => {
+                    openLightbox(
+                        trigger.dataset.image,
+                        trigger.dataset.title
+                    );
+                });
+
+                trigger.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openLightbox(
+                            trigger.dataset.image,
+                            trigger.dataset.title
+                        );
+                    }
+                });
+            });
 
 
         function closeLightbox()

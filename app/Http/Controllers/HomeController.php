@@ -3,50 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\PageContent;
+use App\Services\ImageStorage;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
+    public function __construct(private ImageStorage $imageStorage) {}
+
     public function index(): View
     {
-        $stats = [
-            [
-                'number' => '500+',
-                'label' => 'Buku',
-                'icon' => '📚',
-            ],
-            [
-                'number' => '120+',
-                'label' => 'Peserta',
-                'icon' => '👥',
-            ],
-            [
-                'number' => '50+',
-                'label' => 'Kegiatan',
-                'icon' => '📅',
-            ],
-            [
-                'number' => '10+',
-                'label' => 'Kolaborasi',
-                'icon' => '🤝',
-            ],
+        $pageContent = PageContent::query()->where('slug', 'home')->first();
+        $home = array_replace(
+            config('pages.home'),
+            $pageContent?->content ?? [],
+        );
+        $home['images'] = array_merge(config('pages.home.images'), $home['images'] ?? []);
+        $home['image_urls'] = [
+            'hero' => $this->imageStorage->url($home['images']['hero']),
+            'about' => $this->imageStorage->url($home['images']['about']),
         ];
+
+        foreach ($home['partners']['items'] as &$partner) {
+            $partner['icon_url'] = $this->imageStorage->url($partner['icon'] ?? null);
+        }
+        unset($partner);
 
         $activities = Activity::where('is_active', true)
             ->orderBy('date', 'asc')
             ->get();
 
-        $partners = [
-            'President University',
-            'Naresuan University',
-            'Universiti Utara Malaysia',
-            'Yayasan Bersatu Membangun Indonesia',
-        ];
-
-        return view('home', compact(
-            'stats',
-            'activities',
-            'partners'
-        ));
+        return view('home', compact('home', 'activities'));
     }
 }

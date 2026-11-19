@@ -9,8 +9,9 @@ class ActivitySeeder extends Seeder
 {
     public function run(): void
     {
-        Activity::create([
+        Activity::firstOrCreate([
             'title' => 'Membaca Bersama Kakak Relawan',
+        ], [
             'category' => 'Literasi',
             'description' => 'Kegiatan membaca dan belajar bersama anak-anak TBM Bintang Raharja.',
             'date' => '2026-09-13',
@@ -21,8 +22,9 @@ class ActivitySeeder extends Seeder
             'is_active' => true,
         ]);
 
-        Activity::create([
+        Activity::firstOrCreate([
             'title' => 'Kelas Kreativitas Anak',
+        ], [
             'category' => 'Kreativitas',
             'description' => 'Kegiatan menggambar, membuat kerajinan, dan mengembangkan kreativitas anak.',
             'date' => '2026-09-13',
@@ -33,8 +35,9 @@ class ActivitySeeder extends Seeder
             'is_active' => true,
         ]);
 
-        Activity::create([
+        Activity::firstOrCreate([
             'title' => 'Belajar Komputer Dasar',
+        ], [
             'category' => 'Teknologi',
             'description' => 'Pengenalan dasar komputer dan teknologi untuk peserta TBM.',
             'date' => '2026-09-20',

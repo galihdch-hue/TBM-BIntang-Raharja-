@@ -69,22 +69,15 @@
             <div class="hero-text">
 
                 <span class="hero-label">
-                    HUBUNGI KAMI
+                    {{ $contact['hero']['label'] }}
                 </span>
 
                 <h1>
-                    Mari Terhubung
-                    <span>
-                        Bersama TBM Bintang Raharja
-                    </span>
+                    {{ $contact['hero']['title'] }}
+                    <span>{{ $contact['hero']['highlight'] }}</span>
                 </h1>
 
-                <p>
-                    Punya pertanyaan mengenai kegiatan,
-                    program, atau ingin mengenal lebih jauh
-                    tentang TBM Bintang Raharja?
-                    Silakan hubungi kami.
-                </p>
+                <p>{{ $contact['hero']['description'] }}</p>
 
             </div>
 
@@ -95,14 +88,9 @@
                     💬
                 </div>
 
-                <h3>
-                    Hubungi TBM
-                </h3>
+                <h3>{{ $contact['hero']['card_title'] }}</h3>
 
-                <p>
-                    Kami terbuka untuk komunikasi
-                    dan informasi.
-                </p>
+                <p>{{ $contact['hero']['card_description'] }}</p>
 
             </div>
 
@@ -121,258 +109,74 @@
 
         <div class="contact-person-header">
 
-            <span class="section-label">
-                KONTAK PERSON
-            </span>
+            <span class="section-label">{{ $contact['people_heading']['label'] }}</span>
 
             <h2>
-                Terhubung Langsung
-                <span>Dengan Kami</span>
+                {{ $contact['people_heading']['title'] }}
+                <span>{{ $contact['people_heading']['highlight'] }}</span>
             </h2>
 
-            <p>
-                Silakan hubungi kontak person berikut untuk mendapatkan
-                informasi mengenai kegiatan, program, kunjungan,
-                maupun kolaborasi dengan TBM Bintang Raharja.
-            </p>
+            <p>{{ $contact['people_heading']['description'] }}</p>
 
         </div>
 
 
         <div class="contact-person-grid">
-
-            {{-- =================================================
-                 IBU MURNI
-            ================================================== --}}
-
-            <div class="contact-person-card">
-
-    <button
-        type="button"
-        class="person-avatar"
-        data-profile-image="{{ asset('images/bu murni.jpeg') }}"
-        data-profile-name="Ibu Murni Setianingsih, S.Pd."
-        aria-label="Lihat foto profil Ibu Murni Setianingsih"
-    >
-        <img
-            src="{{ asset('images/bu murni.jpeg') }}"
-    alt=""
-    loading="lazy"
-        >
-        <span class="person-avatar-hint" aria-hidden="true">+</span>
-    </button>
-
-                <div class="person-info">
-
-                    <span class="person-role">
-                        Ketua TBM
-                    </span>
-
-                    <h3>
-                        Ibu Murni Setianingsih, S.Pd.
-                    </h3>
-
-                    <p>
-                        Ketua TBM Bintang Raharja
-                    </p>
-
-
-                    <div class="person-contact-list">
-
-                        <a
-                            href="https://wa.me/6281319083960"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="person-contact whatsapp"
+            @foreach ($contact['people'] as $person)
+                <article class="contact-person-card">
+                    @if ($person['photo_url'])
+                        <button
+                            type="button"
+                            class="person-avatar"
+                            data-profile-image="{{ $person['photo_url'] }}"
+                            data-profile-name="{{ $person['name'] }}"
+                            aria-label="Lihat foto profil {{ $person['name'] }}"
                         >
-                            <span>💬</span>
-                            <div>
-                                <strong>WhatsApp</strong>
-                                <small>+62 813-1908-3960</small>
-                            </div>
-                        </a>
+                            <img src="{{ $person['photo_url'] }}" alt="" loading="lazy">
+                            <span class="person-avatar-hint" aria-hidden="true">+</span>
+                        </button>
+                    @else
+                        <div class="person-avatar person-avatar--placeholder" role="img" aria-label="Foto {{ $person['name'] }} belum tersedia">
+                            <span>{{ strtoupper(mb_substr($person['name'], 0, 3)) }}</span>
+                        </div>
+                    @endif
+
+                    <div class="person-info">
+                        <span class="person-role">{{ $person['role'] }}</span>
+                        <h3>{{ $person['name'] }}</h3>
+                        @if ($person['description'])
+                            <p>{{ $person['description'] }}</p>
+                        @endif
+
+                        <div class="person-contact-list">
+                            @if ($person['whatsapp_number'])
+                                <a
+                                    href="https://wa.me/{{ $person['whatsapp_number'] }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="person-contact whatsapp"
+                                >
+                                    <span>💬</span>
+                                    <div>
+                                        <strong>WhatsApp</strong>
+                                        <small>{{ $person['phone'] }}</small>
+                                    </div>
+                                </a>
+                            @endif
+
+                            @if ($person['email'])
+                                <a href="mailto:{{ $person['email'] }}" class="person-contact email">
+                                    <span>✉️</span>
+                                    <div>
+                                        <strong>Email</strong>
+                                        <small>{{ $person['email'] }}</small>
+                                    </div>
+                                </a>
+                            @endif
+                        </div>
                     </div>
-
-                </div>
-
-            </div>
-
-
-          {{-- =================================================
-     GALIH
-================================================== --}}
-
-<div class="contact-person-card">
-
-    <button
-        type="button"
-        class="person-avatar"
-        data-profile-image="{{ asset('images/galih.jpeg') }}"
-        data-profile-name="Galih Dwi Chandra"
-        aria-label="Lihat foto profil Galih Dwi Chandra"
-    >
-        <img
-            src="{{ asset('images/galih.jpeg') }}"
-            alt=""
-            loading="lazy"
-        >
-        <span class="person-avatar-hint" aria-hidden="true">+</span>
-    </button>
-
-    <div class="person-info">
-
-        <span class="person-role">
-            Kontak Person
-        </span>
-
-        <h3>
-            Galih Dwi Chandra
-        </h3>
-
-        <p>
-            Pengembang Website TBM Bintang Raharja
-        </p>
-
-        <div class="person-contact-list">
-
-            <a
-                href="https://wa.me/628980525220"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="person-contact whatsapp"
-            >
-                            <span>💬</span>
-                            <div>
-                                <strong>WhatsApp</strong>
-                                <small>+62 898-0525-220</small>
-                            </div>
-                        </a>
-
-
-            <a
-                href="mailto:galih.dch@gmail.com"
-                class="person-contact email"
-            >
-                <span>✉️</span>
-                <div>
-                    <strong>Email</strong>
-                    <small>galih.dch@gmail.com</small>
-                </div>
-            </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            {{-- MERLYN SUMARDIYANI --}}
-
-            <div class="contact-person-card">
-
-                <button
-                    type="button"
-                    class="person-avatar"
-                    data-profile-image="{{ asset('images/merlin.jpeg') }}"
-                    data-profile-name="Merlyn Sumardiyani"
-                    aria-label="Lihat foto profil Merlyn Sumardiyani"
-                >
-                    <img
-                        src="{{ asset('images/merlin.jpeg') }}"
-                        alt=""
-                        loading="lazy"
-                    >
-                    <span class="person-avatar-hint" aria-hidden="true">+</span>
-                </button>
-
-                <div class="person-info">
-
-                    <span class="person-role">Sekretaris 2</span>
-
-                    <h3>Merlyn Sumardiyani</h3>
-
-                    <p>Pengurus TBM Bintang Raharja</p>
-
-                    <div class="person-contact-list">
-                        <a
-                            href="https://wa.me/62895360679144"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="person-contact whatsapp"
-                        >
-                            <span>💬</span>
-                            <div>
-                                <strong>WhatsApp</strong>
-                                <small>+62 895-3606-79144</small>
-                            </div>
-                        </a>
-
-                        <a
-                            href="mailto:merlynsumardiyani47@gmail.com"
-                            class="person-contact email"
-                        >
-                            <span>✉️</span>
-                            <div>
-                                <strong>Email</strong>
-                                <small>merlynsumardiyani47@gmail.com</small>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            {{-- ASHILA NUR FATIHAH --}}
-
-            <div class="contact-person-card">
-
-                <div
-                    class="person-avatar person-avatar--placeholder"
-                    role="img"
-                    aria-label="Foto Ashila Nur Fatihah belum tersedia"
-                >
-                    <span>ANF</span>
-                </div>
-
-                <div class="person-info">
-
-                    <span class="person-role">Bendahara 2</span>
-
-                    <h3>Ashila Nur Fatihah</h3>
-
-                    <p>Pengurus TBM Bintang Raharja</p>
-
-                    <div class="person-contact-list">
-                        <a
-                            href="https://wa.me/6281318356692"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="person-contact whatsapp"
-                        >
-                            <span>💬</span>
-                            <div>
-                                <strong>WhatsApp</strong>
-                                <small>+62 813-1835-6692</small>
-                            </div>
-                        </a>
-
-                        <a
-                            href="mailto:ashilanurfatihah@gmail.com"
-                            class="person-contact email"
-                        >
-                            <span>✉️</span>
-                            <div>
-                                <strong>Email</strong>
-                                <small>ashilanurfatihah@gmail.com</small>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
+                </article>
+            @endforeach
         </div>
 
     </div>
@@ -392,18 +196,11 @@
 
             <div>
 
-                <span class="section-label">
-                    INFORMASI KONTAK
-                </span>
+                <span class="section-label">{{ $contact['information']['label'] }}</span>
 
-                <h2>
-                    Temukan Kami
-                </h2>
+                <h2>{{ $contact['information']['title'] }}</h2>
 
-                <p>
-                    Informasi yang dapat membantu
-                    Anda terhubung dengan TBM Bintang Raharja.
-                </p>
+                <p>{{ $contact['information']['description'] }}</p>
 
             </div>
 
@@ -413,86 +210,18 @@
         <div class="contact-grid">
 
 
-            {{-- LOKASI --}}
-
-            <div class="contact-card">
-
-                <div class="contact-card-icon">
-                    📍
-                </div>
-
-                <div>
-
-                    <h3>
-                        Lokasi
-                    </h3>
-
-                    <p>
-                        Desa Karangharja,
-                        Cikarang Utara,
-                        Kabupaten Bekasi.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            {{-- KEGIATAN --}}
-
-            <div class="contact-card">
-
-                <div class="contact-card-icon">
-                    📚
-                </div>
-
-                <div>
-
-                    <h3>
-                        Kegiatan
-                    </h3>
-
-                    <p>
-                        Informasi mengenai jadwal
-                        dan kegiatan dapat dilihat
-                        melalui halaman Kegiatan.
-                    </p>
-
-                    <a
-                        href="{{ route('activities.index') }}"
-                    >
-                        Lihat Kegiatan →
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            {{-- INFORMASI --}}
-
-            <div class="contact-card">
-
-                <div class="contact-card-icon">
-                    ℹ️
-                </div>
-
-                <div>
-
-                    <h3>
-                        Informasi
-                    </h3>
-
-                    <p>
-                        Hubungi pengelola TBM untuk
-                        mendapatkan informasi lebih lanjut
-                        mengenai program dan kegiatan.
-                    </p>
-
-                </div>
-
-            </div>
-
+            @foreach ($contact['information']['cards'] as $card)
+                <article class="contact-card">
+                    <div class="contact-card-icon">{{ $card['icon'] }}</div>
+                    <div>
+                        <h3>{{ $card['title'] }}</h3>
+                        <p>{{ $card['description'] }}</p>
+                        @if ($card['link_route'] === 'activities.index' && $card['link_label'])
+                            <a href="{{ route('activities.index') }}">{{ $card['link_label'] }}</a>
+                        @endif
+                    </div>
+                </article>
+            @endforeach
 
         </div>
 
@@ -517,92 +246,22 @@
 
             <div class="contact-info">
 
-                <span class="section-label">
-                    PESAN UNTUK KAMI
-                </span>
+                <span class="section-label">{{ $contact['message']['label'] }}</span>
 
-                <h2>
-                    Ada yang ingin
-                    ditanyakan?
-                </h2>
+                <h2>{{ $contact['message']['title'] }}</h2>
 
-                <p>
-                    Sampaikan pertanyaan atau pesan Anda
-                    melalui formulir di samping.
-                </p>
-
+                <p>{{ $contact['message']['description'] }}</p>
 
                 <div class="info-list">
-
-
-                    <div class="info-item">
-
-                        <div class="info-icon">
-                            📍
+                    @foreach ($contact['message']['details'] as $detail)
+                        <div class="info-item">
+                            <div class="info-icon">{{ $detail['icon'] }}</div>
+                            <div>
+                                <strong>{{ $detail['title'] }}</strong>
+                                <span>{{ $detail['description'] }}</span>
+                            </div>
                         </div>
-
-                        <div>
-
-                            <strong>
-                                Alamat
-                            </strong>
-
-                            <span>
-                                Desa Karangharja,
-                                Cikarang Utara,
-                                Kabupaten Bekasi.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="info-item">
-
-                        <div class="info-icon">
-                            📅
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Kegiatan
-                            </strong>
-
-                            <span>
-                                Informasi jadwal kegiatan
-                                tersedia di halaman Kegiatan.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="info-item">
-
-                        <div class="info-icon">
-                            🤝
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Terbuka untuk Kolaborasi
-                            </strong>
-
-                            <span>
-                                TBM terbuka untuk komunikasi
-                                dan kerja sama yang mendukung
-                                kegiatan literasi.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
+                    @endforeach
                 </div>
 
             </div>
@@ -613,14 +272,9 @@
 
             <div class="contact-form-card">
 
-                <h3>
-                    Kirim Pesan
-                </h3>
+                <h3>{{ $contact['message']['form_title'] }}</h3>
 
-                <p class="form-description">
-                    Isi formulir berikut untuk menyampaikan
-                    pesan kepada TBM Bintang Raharja.
-                </p>
+                <p class="form-description">{{ $contact['message']['form_description'] }}</p>
 
 
                 <form
@@ -750,26 +404,33 @@
 
             <span class="cta-eyebrow">
                 <i aria-hidden="true">✦</i>
-                TBM BINTANG RAHARJA
+                {{ $contact['cta']['eyebrow'] }}
                 <i aria-hidden="true">✦</i>
             </span>
 
             <h2>
-                Mari belajar dan berkembang bersama.
+                {{ $contact['cta']['title'] }}
             </h2>
 
             <div class="cta-title-line" aria-hidden="true"></div>
 
             <p>
-                Ikuti kegiatan dan program
-                TBM Bintang Raharja.
+                {{ $contact['cta']['description'] }}
             </p>
 
             <a
                 href="{{ route('activities.index') }}"
                 class="button white cta-button"
             >
-                Lihat Kegiatan
+                {{ $contact['cta']['activities_label'] }}
+                <span aria-hidden="true">→</span>
+            </a>
+
+            <a
+                href="{{ route('login') }}"
+                class="button contact-login-button"
+            >
+                {{ $contact['cta']['login_label'] }}
                 <span aria-hidden="true">→</span>
             </a>
 
