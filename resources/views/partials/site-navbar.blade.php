@@ -14,7 +14,7 @@
             </span>
         </a>
 
-        <nav class="site-navbar__links" aria-label="Navigasi utama">
+        <nav id="site-navigation" class="site-navbar__links" aria-label="Navigasi utama">
             <a
                 href="{{ route('home') }}"
                 class="site-navbar__link {{ request()->routeIs('home') ? 'is-active' : '' }}"
@@ -59,5 +59,15 @@
             </a>
         </nav>
 
+        <button
+            class="site-navbar__toggle"
+            type="button"
+            aria-controls="site-navigation"
+            aria-expanded="false"
+            data-responsive-nav-toggle
+        >
+            Menu
+        </button>
     </div>
 </header>
+<script src="{{ asset('js/responsive-navigation.js') }}" defer></script>

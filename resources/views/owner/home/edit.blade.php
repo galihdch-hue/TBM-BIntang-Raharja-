@@ -576,9 +576,13 @@
                                 <div class="owner-field">
                                     <label for="partner-icon-{{ $index }}">Logo</label>
                                     <input id="partner-icon-{{ $index }}" name="partners[items][{{ $index }}][icon]" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp">
-                                    <small>Maksimal 10 MB. Logo otomatis dikompres ke WebP. Kosongkan untuk mempertahankan logo saat ini.</small>
+                                    <small>Maksimal 10 MB. Unggah gambar untuk mengganti logo saat ini.</small>
                                     @if (data_get($partner, 'icon_url'))
                                         <img class="owner-image-preview" src="{{ $partner['icon_url'] }}" alt="Logo {{ data_get($partner, 'name', 'kolaborator') }}">
+                                        <label class="owner-checkbox">
+                                            <input type="checkbox" name="partners[items][{{ $index }}][remove_icon]" value="1" @checked(old('partners.'.$index.'.remove_icon'))>
+                                            <span>Hapus logo saat ini</span>
+                                        </label>
                                     @endif
                                 </div>
                             </div>
@@ -600,7 +604,7 @@
                             <div class="owner-field">
                                 <label for="partner-icon-__INDEX__">Logo</label>
                                 <input id="partner-icon-__INDEX__" name="partners[items][__INDEX__][icon]" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp">
-                                <small>Maksimal 10 MB. Logo otomatis dikompres ke WebP.</small>
+                                <small>Opsional, maksimal 10 MB. Logo otomatis dikompres ke WebP.</small>
                             </div>
                         </div>
                     </div>

@@ -16,13 +16,19 @@ class PublicNavigationTest extends TestCase
             ->assertDontSee('Masuk');
     }
 
-    public function test_login_page_is_not_available(): void
+    public function test_login_page_displays_the_owner_sign_in_form(): void
     {
-        $this->get('/login')->assertNotFound();
+        $this->get(route('login'))
+            ->assertOk()
+            ->assertSee('Masuk ke Area Pengelola')
+            ->assertSee(route('login.authenticate'), false);
     }
 
-    public function test_login_submission_is_not_available(): void
+    public function test_login_submission_redirects_with_required_credential_errors(): void
     {
-        $this->post('/login')->assertNotFound();
+        $this->from(route('login'))
+            ->post(route('login.authenticate'), [])
+            ->assertRedirect(route('login'))
+            ->assertSessionHasErrors(['email', 'password']);
     }
 }

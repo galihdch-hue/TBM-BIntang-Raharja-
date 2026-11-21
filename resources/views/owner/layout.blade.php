@@ -27,7 +27,17 @@
             </span>
         </a>
 
-        <nav class="owner-nav" aria-label="Navigasi pengelolaan">
+        <button
+            class="owner-nav-toggle"
+            type="button"
+            aria-controls="owner-navigation"
+            aria-expanded="false"
+            data-responsive-nav-toggle
+        >
+            Menu
+        </button>
+
+        <nav id="owner-navigation" class="owner-nav" aria-label="Navigasi pengelolaan">
             <a
                 href="{{ route('owner.dashboard') }}"
                 class="{{ request()->routeIs('owner.dashboard') ? 'is-active' : '' }}"
@@ -100,6 +110,7 @@
     <footer class="owner-footer">
         Area pengelolaan TBM Bintang Raharja
     </footer>
+    <script src="{{ asset('js/responsive-navigation.js') }}" defer></script>
 </body>
 
 </html>

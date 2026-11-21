@@ -381,28 +381,27 @@
 @if($activity->instructor)
     <div class="instructor">
 
-        <div class="instructor-avatar">
-
-            @if($activity->instructor_image && file_exists(public_path($activity->instructor_image)))
-
-                <img
-                    src="{{ asset($activity->instructor_image) }}"
-                    alt="{{ $activity->instructor_display_name }}"
-                >
-
-            @else
-
+        @if ($activity->instructor_image_url)
+            <button
+                type="button"
+                class="instructor-avatar instructor-avatar--interactive"
+                data-instructor-photo="{{ $activity->instructor_image_url }}"
+                data-instructor-name="{{ $activity->instructor_display_name }}"
+                aria-label="Lihat foto pengajar {{ $activity->instructor_display_name }}"
+            >
+                <img src="{{ $activity->instructor_image_url }}" alt="" loading="lazy">
+                <span class="instructor-avatar-hint" aria-hidden="true">+</span>
+            </button>
+        @else
+            <div class="instructor-avatar">
                 <span>
-                    {{ strtoupper(substr($activity->instructor_display_name, 0, 1)) }}
+                    {{ strtoupper(mb_substr($activity->instructor_display_name, 0, 1)) }}
                 </span>
+            </div>
+        @endif
 
-            @endif
-
-        </div>
-
-        <div>
-            <small>Pengajar</small>
-
+        <div class="instructor-info">
+            <small class="instructor-label">Pengajar</small>
             <strong>
                 {{ $activity->instructor_display_name }}
             </strong>
@@ -528,6 +527,8 @@
 ========================================================= --}}
 
 @include('partials.site-footer')
+
+@include('partials.instructor-lightbox')
 
 
 <script>

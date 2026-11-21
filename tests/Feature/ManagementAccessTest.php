@@ -19,6 +19,7 @@ class ManagementAccessTest extends TestCase
             'role' => $role,
         ]);
         $content = config('tbm.about');
+        unset($content['images']);
         $content['hero']['description'] = '<script>alert("x")</script>';
 
         $this->actingAs($user)

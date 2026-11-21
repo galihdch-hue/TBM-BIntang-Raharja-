@@ -803,6 +803,7 @@
      KOLABORASI
 ========================================================= --}}
 
+@if (! empty($home['partners']['items']))
 <section class="section partners-section">
 
     <div class="container">
@@ -837,6 +838,7 @@
         </div>
 
 </section>
+@endif
 
 
 

@@ -50,6 +50,7 @@ class OwnerContentManagementTest extends TestCase
                 'start_time' => '09:00',
                 'end_time' => '11:00',
                 'instructor' => 'Murni',
+                'instructor_photo' => UploadedFile::fake()->image('pemateri.jpg'),
                 'location' => 'TBM Bintang Raharja',
                 'image' => UploadedFile::fake()->image('koding.jpg'),
                 'is_active' => '1',
@@ -58,13 +59,16 @@ class OwnerContentManagementTest extends TestCase
 
         $activity = Activity::query()->where('title', 'Belajar Koding')->firstOrFail();
         $imagePath = $activity->image;
+        $instructorPhotoPath = $activity->instructor_photo;
 
         $this->assertDatabaseHas('activities', [
             'id' => $activity->id,
             'is_active' => true,
         ]);
         $this->assertStringEndsWith('.webp', $imagePath);
+        $this->assertStringEndsWith('.webp', $instructorPhotoPath);
         Storage::disk('public')->assertExists($imagePath);
+        Storage::disk('public')->assertExists($instructorPhotoPath);
 
         $this->actingAs($owner)
             ->put(route('owner.activities.update', $activity), [
@@ -85,6 +89,7 @@ class OwnerContentManagementTest extends TestCase
             'title' => 'Belajar Koding Lanjutan',
         ]);
         $this->assertSame($imagePath, $activity->fresh()->image);
+        $this->assertSame($instructorPhotoPath, $activity->fresh()->instructor_photo);
 
         $this->actingAs($owner)
             ->delete(route('owner.activities.destroy', $activity))
@@ -94,6 +99,74 @@ class OwnerContentManagementTest extends TestCase
             'id' => $activity->id,
         ]);
         Storage::disk('public')->assertMissing($imagePath);
+        Storage::disk('public')->assertMissing($instructorPhotoPath);
+    }
+
+    public function test_pemilik_can_replace_an_activity_instructor_photo(): void
+    {
+        Storage::fake('public');
+
+        $owner = User::factory()->create([
+            'role' => 'pemilik',
+        ]);
+        $activity = Activity::query()->create([
+            'title' => 'Kelas Membaca',
+            'category' => 'Literasi',
+            'date' => '2026-12-01',
+            'start_time' => '09:00',
+            'end_time' => '10:00',
+            'instructor' => 'Murni',
+            'instructor_photo' => 'uploads/activities/pemateri-lama.webp',
+            'is_active' => true,
+        ]);
+        Storage::disk('public')->put($activity->instructor_photo, 'foto lama');
+
+        $this->actingAs($owner)
+            ->put(route('owner.activities.update', $activity), [
+                'title' => $activity->title,
+                'category' => $activity->category,
+                'date' => '2026-12-01',
+                'start_time' => '09:00',
+                'end_time' => '10:00',
+                'instructor' => 'Murni',
+                'instructor_photo' => UploadedFile::fake()->image('pemateri-baru.jpg'),
+                'is_active' => '1',
+            ])
+            ->assertRedirect(route('owner.activities.index'));
+
+        $newPhotoPath = $activity->fresh()->instructor_photo;
+
+        $this->assertNotSame('uploads/activities/pemateri-lama.webp', $newPhotoPath);
+        $this->assertStringEndsWith('.webp', $newPhotoPath);
+        Storage::disk('public')->assertExists($newPhotoPath);
+        Storage::disk('public')->assertMissing('uploads/activities/pemateri-lama.webp');
+    }
+
+    public function test_activity_instructor_photo_larger_than_ten_megabytes_is_rejected(): void
+    {
+        Storage::fake('public');
+        $owner = User::factory()->create([
+            'role' => 'pemilik',
+        ]);
+
+        $this->actingAs($owner)
+            ->from(route('owner.activities.create'))
+            ->post(route('owner.activities.store'), [
+                'title' => 'Kegiatan dengan foto pemateri terlalu besar',
+                'category' => 'Literasi',
+                'date' => '2026-12-08',
+                'start_time' => '09:00',
+                'end_time' => '10:00',
+                'instructor_photo' => UploadedFile::fake()->image('terlalu-besar.jpg')->size(10241),
+            ])
+            ->assertRedirect(route('owner.activities.create'))
+            ->assertSessionHasErrors('instructor_photo')
+            ->assertSessionHas('errors', fn ($errors): bool => $errors->getBag('default')->first('instructor_photo') === 'Ukuran foto pemateri maksimal 10 MB.');
+
+        $this->assertDatabaseMissing('activities', [
+            'title' => 'Kegiatan dengan foto pemateri terlalu besar',
+        ]);
+        Storage::disk('public')->assertDirectoryEmpty('uploads/activities');
     }
 
     public function test_pemilik_can_create_update_and_delete_news(): void

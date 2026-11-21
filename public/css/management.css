@@ -31,8 +31,8 @@ body.owner-body {
     display: flex;
     min-height: 78px;
     align-items: center;
-    gap: 30px;
-    padding: 12px clamp(18px, 4vw, 58px);
+    gap: clamp(14px, 2vw, 26px);
+    padding: 12px clamp(20px, 3vw, 44px);
     border-bottom: 1px solid rgba(255, 255, 255, .75);
     background: rgba(255, 255, 255, .86);
     box-shadow: 0 8px 30px rgba(23, 50, 77, .05);
@@ -53,6 +53,11 @@ body.owner-body {
     display: block;
     width: 43px;
     height: 43px;
+    padding: 5px;
+    border: 1px solid var(--owner-border);
+    border-radius: 13px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(23, 50, 77, .08);
     object-fit: contain;
 }
 
@@ -76,9 +81,31 @@ body.owner-body {
 
 .owner-nav {
     display: flex;
-    flex: 1;
+    flex: 0 1 auto;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    min-width: 0;
+    padding: 5px;
+    border: 1px solid var(--owner-border);
+    border-radius: 14px;
+    background: rgba(247, 250, 253, .9);
+}
+
+.owner-nav-toggle {
+    display: none;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    border: 1px solid var(--owner-border);
+    border-radius: 10px;
+    color: #087c68;
+    background: white;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .owner-nav a,
@@ -102,13 +129,20 @@ body.owner-body {
     display: flex;
     flex: 0 0 auto;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    margin-left: auto;
+    padding-left: 18px;
+    border-left: 1px solid var(--owner-border);
 }
 
 .owner-account {
     max-width: 150px;
     overflow: hidden;
+    padding: 9px 11px;
+    border: 1px solid var(--owner-border);
+    border-radius: 10px;
     color: #526b81;
+    background: #f8fbfd;
     font-size: 12px;
     font-weight: 700;
     text-overflow: ellipsis;
@@ -116,7 +150,14 @@ body.owner-body {
 }
 
 .owner-public-link {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    padding: 0 12px;
+    border: 1px solid transparent;
+    border-radius: 10px;
     color: #147d94;
+    background: #effafc;
 }
 
 .owner-public-link:hover {
@@ -362,6 +403,30 @@ body.owner-body {
     padding: 23px 25px;
 }
 
+.owner-quick-actions__groups {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+}
+
+.owner-quick-actions__group {
+    display: grid;
+    gap: 8px;
+}
+
+.owner-quick-actions__group + .owner-quick-actions__group {
+    padding-left: 18px;
+    border-left: 1px solid var(--owner-border);
+}
+
+.owner-quick-actions__label {
+    color: var(--owner-muted);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
 .owner-quick-actions h2,
 .owner-panel__heading h2 {
     margin: 5px 0 0;
@@ -412,6 +477,16 @@ body.owner-body {
 .owner-button--purple {
     background: linear-gradient(110deg, #7a61e4, #aa68d9);
     box-shadow: 0 8px 18px rgba(140, 108, 255, .2);
+}
+
+.owner-button--teal {
+    background: linear-gradient(110deg, #087c93, #20c7dc);
+    box-shadow: 0 8px 18px rgba(32, 199, 220, .2);
+}
+
+.owner-button--orange {
+    background: linear-gradient(110deg, #b45309, #c2410c);
+    box-shadow: 0 8px 18px rgba(180, 83, 9, .2);
 }
 
 .owner-button--quiet {
@@ -815,6 +890,16 @@ body.owner-body {
     object-position: left center;
 }
 
+.owner-instructor-preview {
+    display: block;
+    width: min(100%, 220px);
+    aspect-ratio: 1;
+    border: 1px solid var(--owner-border);
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: center;
+}
+
 .owner-checkbox {
     display: inline-flex;
     width: fit-content;
@@ -897,20 +982,63 @@ body.owner-body {
     }
 }
 
+@media (max-width: 1200px) {
+    .owner-header {
+        gap: 14px;
+        padding-inline: 24px;
+    }
+
+    .owner-nav a {
+        padding-inline: 8px;
+        white-space: nowrap;
+    }
+
+    .owner-header__actions {
+        gap: 6px;
+        padding-left: 12px;
+    }
+
+    .owner-account {
+        max-width: 130px;
+        padding-inline: 8px;
+    }
+}
+
 @media (max-width: 1050px) {
     .owner-header {
         flex-wrap: wrap;
         gap: 8px 18px;
     }
 
+    .owner-nav-toggle {
+        display: inline-flex;
+        order: 2;
+        margin-left: auto;
+    }
+
     .owner-nav {
-        order: 3;
+        display: none;
+        order: 4;
         flex-basis: 100%;
-        overflow-x: auto;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 4px;
+        padding-top: 6px;
+    }
+
+    .owner-nav.is-open {
+        display: flex;
+    }
+
+    .owner-nav a {
+        width: 100%;
     }
 
     .owner-header__actions {
+        order: 3;
         margin-left: auto;
+        padding-left: 0;
+        border-left: 0;
     }
 }
 
@@ -939,6 +1067,19 @@ body.owner-body {
         gap: 17px;
     }
 
+    .owner-quick-actions__groups {
+        width: 100%;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .owner-quick-actions__group + .owner-quick-actions__group {
+        padding: 14px 0 0;
+        border-top: 1px solid var(--owner-border);
+        border-left: 0;
+    }
+
     .owner-welcome {
         min-height: 190px;
     }
@@ -960,6 +1101,11 @@ body.owner-body {
 
     .owner-table-panel {
         padding-inline: 12px;
+    }
+
+    .owner-header__actions {
+        flex: 1 1 100%;
+        justify-content: flex-end;
     }
 }
 
@@ -983,17 +1129,15 @@ body.owner-body {
     }
 
     .owner-nav {
-        gap: 1px;
-    }
-
-    .owner-nav a {
-        padding: 9px 10px;
-        font-size: 11px;
-        white-space: nowrap;
+        gap: 4px;
     }
 
     .owner-quick-actions__links {
         width: 100%;
+    }
+
+    .owner-quick-actions__group--pages .owner-button {
+        flex: 1 1 auto;
     }
 
     .owner-quick-actions__links .owner-button {
@@ -1016,6 +1160,10 @@ body.owner-body {
 
     .owner-form__actions .owner-button {
         width: 100%;
+    }
+
+    .owner-nav-toggle {
+        margin-left: auto;
     }
 }
 

@@ -70,6 +70,150 @@ class PageContentManagementTest extends TestCase
             ->assertSee($partnerLogoPath);
     }
 
+    public function test_uploaded_homepage_images_use_the_request_host_when_disk_url_is_stale(): void
+    {
+        config([
+            'filesystems.disks.public.url' => 'http://localhost:8000/storage',
+        ]);
+        PageContent::query()->create([
+            'slug' => 'home',
+            'content' => [
+                'images' => [
+                    'hero' => 'uploads/home/hero.webp',
+                ],
+            ],
+        ]);
+
+        $this->get('http://tbm-bintang-raharja.test/')
+            ->assertOk()
+            ->assertSee(
+                'src="http://tbm-bintang-raharja.test/storage/uploads/home/hero.webp"',
+                false,
+            );
+    }
+
+    public function test_owner_can_replace_and_add_collaborator_logos(): void
+    {
+        Storage::fake('public');
+        $owner = User::factory()->create([
+            'role' => 'pemilik',
+        ]);
+        $existingLogoPath = 'uploads/partners/logo-lama.webp';
+        $existingContent = config('pages.home');
+        $existingContent['partners']['items'][0]['icon'] = $existingLogoPath;
+        PageContent::query()->create([
+            'slug' => 'home',
+            'content' => $existingContent,
+        ]);
+        Storage::disk('public')->put($existingLogoPath, 'logo lama');
+
+        $content = config('pages.home');
+        unset($content['images'], $content['icon_options']);
+        foreach ($content['partners']['items'] as &$partner) {
+            unset($partner['icon']);
+        }
+        unset($partner);
+        $content['partners']['items'][0]['icon'] = UploadedFile::fake()->image('logo-baru.png');
+        $content['partners']['items'][] = [
+            'name' => 'Kolaborator Baru',
+            'icon' => UploadedFile::fake()->image('logo-kolaborator.png'),
+        ];
+
+        $this->actingAs($owner)
+            ->put(route('owner.home.update'), $content)
+            ->assertRedirect(route('owner.home.edit'));
+
+        $partners = PageContent::query()
+            ->where('slug', 'home')
+            ->firstOrFail()
+            ->content['partners']['items'];
+        $this->assertCount(5, $partners);
+        $this->assertSame('Kolaborator Baru', $partners[4]['name']);
+        $this->assertStringEndsWith('.webp', $partners[0]['icon']);
+        $this->assertStringEndsWith('.webp', $partners[4]['icon']);
+        Storage::disk('public')->assertMissing($existingLogoPath);
+        Storage::disk('public')->assertExists($partners[0]['icon']);
+        Storage::disk('public')->assertExists($partners[4]['icon']);
+    }
+
+    public function test_owner_can_remove_a_collaborator_logo_without_removing_the_collaborator(): void
+    {
+        Storage::fake('public');
+        $owner = User::factory()->create([
+            'role' => 'pemilik',
+        ]);
+        $existingLogoPath = 'uploads/partners/logo-yang-dihapus.webp';
+        $existingContent = config('pages.home');
+        $existingContent['partners']['items'][0]['icon'] = $existingLogoPath;
+        PageContent::query()->create([
+            'slug' => 'home',
+            'content' => $existingContent,
+        ]);
+        Storage::disk('public')->put($existingLogoPath, 'logo lama');
+
+        $content = config('pages.home');
+        unset($content['images'], $content['icon_options']);
+        foreach ($content['partners']['items'] as &$partner) {
+            unset($partner['icon']);
+        }
+        unset($partner);
+        $content['partners']['items'][0]['remove_icon'] = '1';
+
+        $this->actingAs($owner)
+            ->get(route('owner.home.edit'))
+            ->assertOk()
+            ->assertSee('Hapus logo saat ini');
+
+        $this->actingAs($owner)
+            ->put(route('owner.home.update'), $content)
+            ->assertRedirect(route('owner.home.edit'));
+
+        $partners = PageContent::query()
+            ->where('slug', 'home')
+            ->firstOrFail()
+            ->content['partners']['items'];
+        $this->assertCount(4, $partners);
+        $this->assertSame('President University', $partners[0]['name']);
+        $this->assertSame('', $partners[0]['icon']);
+        Storage::disk('public')->assertMissing($existingLogoPath);
+    }
+
+    public function test_owner_can_remove_all_homepage_collaborators(): void
+    {
+        Storage::fake('public');
+        $owner = User::factory()->create([
+            'role' => 'pemilik',
+        ]);
+        $existingLogoPath = 'uploads/partners/logo-lama.webp';
+        $existingContent = config('pages.home');
+        $existingContent['partners']['items'][0]['icon'] = $existingLogoPath;
+        PageContent::query()->create([
+            'slug' => 'home',
+            'content' => $existingContent,
+        ]);
+        Storage::disk('public')->put($existingLogoPath, 'logo lama');
+
+        $content = config('pages.home');
+        unset($content['images'], $content['icon_options']);
+        $content['partners']['items'] = [];
+
+        $this->actingAs($owner)
+            ->put(route('owner.home.update'), $content)
+            ->assertRedirect(route('owner.home.edit'));
+
+        $homeContent = PageContent::query()
+            ->where('slug', 'home')
+            ->firstOrFail()
+            ->content;
+        $this->assertSame([], $homeContent['partners']['items']);
+        Storage::disk('public')->assertMissing($existingLogoPath);
+
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertDontSee('President University')
+            ->assertDontSee('class="section partners-section"', false);
+    }
+
     public function test_owner_can_add_update_and_remove_contact_people_and_photos(): void
     {
         Storage::fake('public');

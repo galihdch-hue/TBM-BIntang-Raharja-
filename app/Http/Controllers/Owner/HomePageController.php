@@ -105,8 +105,9 @@ class HomePageController extends Controller
             'partners.label' => ['required', 'string', 'max:100'],
             'partners.title' => ['required', 'string', 'max:255'],
             'partners.description' => ['required', 'string', 'max:2000'],
-            'partners.items' => ['required', 'array', 'min:1', 'max:20'],
+            'partners.items' => ['nullable', 'array', 'max:20'],
             'partners.items.*.name' => ['required', 'string', 'max:255'],
+            'partners.items.*.remove_icon' => ['sometimes', 'boolean'],
             'partners.items.*.icon' => [
                 'nullable',
                 File::image()
@@ -148,13 +149,16 @@ class HomePageController extends Controller
 
         $pageContent = PageContent::query()->where('slug', 'home')->first();
         $existingPartners = $pageContent?->content['partners']['items'] ?? config('pages.home.partners.items');
+        $content['partners']['items'] = array_values($content['partners']['items'] ?? []);
 
         foreach ($content['partners']['items'] as $index => &$partner) {
             $upload = $partner['icon'] ?? null;
             $existingIcon = $existingPartners[$index]['icon'] ?? '';
+            $removeIcon = $request->boolean("partners.items.{$index}.remove_icon");
             $partner['icon'] = $upload instanceof UploadedFile
                 ? $this->imageStorage->store($upload, 'uploads/partners')
-                : $existingIcon;
+                : ($removeIcon ? '' : $existingIcon);
+            unset($partner['remove_icon']);
         }
         unset($partner);
 

@@ -38,14 +38,25 @@
             <span class="owner-eyebrow">AKSI CEPAT</span>
             <h2>Tambahkan konten baru</h2>
         </div>
-        <div class="owner-quick-actions__links">
-            <a class="owner-button owner-button--green" href="{{ route('owner.activities.create') }}">+ Kegiatan</a>
-            <a class="owner-button owner-button--blue" href="{{ route('owner.news.create') }}">+ Berita</a>
-            <a class="owner-button owner-button--purple" href="{{ route('owner.gallery.create') }}">+ Galeri</a>
-            <a class="owner-button owner-button--quiet" href="{{ route('owner.about.edit') }}">Edit Tentang</a>
-            @if (auth()->user()->isPemilik())
-                <a class="owner-button owner-button--quiet" href="{{ route('owner.pengurus.index') }}">Kelola Pengurus</a>
-            @endif
+        <div class="owner-quick-actions__groups">
+            <div class="owner-quick-actions__group">
+                <span class="owner-quick-actions__label">TAMBAH KONTEN</span>
+                <div class="owner-quick-actions__links">
+                    <a class="owner-button owner-button--green" href="{{ route('owner.activities.create') }}">+ Kegiatan</a>
+                    <a class="owner-button owner-button--blue" href="{{ route('owner.news.create') }}">+ Berita</a>
+                    <a class="owner-button owner-button--purple" href="{{ route('owner.gallery.create') }}">+ Galeri</a>
+                </div>
+            </div>
+            <div class="owner-quick-actions__group owner-quick-actions__group--pages">
+                <span class="owner-quick-actions__label">KELOLA HALAMAN</span>
+                <div class="owner-quick-actions__links">
+                    <a class="owner-button owner-button--blue" href="{{ route('owner.home.edit') }}">Edit Beranda</a>
+                    <a class="owner-button owner-button--teal" href="{{ route('owner.about.edit') }}">Edit Tentang</a>
+                    @if (auth()->user()->isPemilik())
+                        <a class="owner-button owner-button--orange" href="{{ route('owner.pengurus.index') }}">Kelola Pengurus</a>
+                    @endif
+                </div>
+            </div>
         </div>
     </section>
 

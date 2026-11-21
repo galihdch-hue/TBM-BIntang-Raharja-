@@ -52,6 +52,26 @@
                 <input id="location" name="location" type="text" maxlength="255" value="{{ old('location', $activity->location) }}">
             </div>
             <div class="owner-field owner-field--wide">
+                <label for="instructor_photo">Foto pemateri (opsional)</label>
+                <input
+                    id="instructor_photo"
+                    name="instructor_photo"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif,image/bmp"
+                    aria-describedby="instructor-photo-help"
+                >
+                <small id="instructor-photo-help">
+                    Maksimal 10 MB. Foto akan dikompres ke WebP dan dipotong memenuhi bingkai agar tidak ada bidang kosong di sisi foto.
+                </small>
+                @if ($instructorPhotoUrl)
+                    <img
+                        class="owner-instructor-preview"
+                        src="{{ $instructorPhotoUrl }}"
+                        alt="Foto pemateri {{ old('instructor', $activity->instructor) }}"
+                    >
+                @endif
+            </div>
+            <div class="owner-field owner-field--wide">
                 <label for="image">Unggah gambar (opsional)</label>
                 <input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" aria-describedby="image-help">
                 <small id="image-help">Maksimal 10 MB. Gambar otomatis dikompres ke WebP. Mengosongkan input akan mempertahankan gambar saat ini.</small>

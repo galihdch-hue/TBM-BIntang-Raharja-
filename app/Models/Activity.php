@@ -44,16 +44,16 @@ class Activity extends Model
         'start_time',
         'end_time',
         'instructor',
+        'instructor_photo',
         'location',
         'image',
         'is_active',
     ];
 
     protected $casts = [
-        'date'      => 'date',
+        'date' => 'date',
         'is_active' => 'boolean',
     ];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -79,7 +79,6 @@ class Activity extends Model
             'attendances'
         )->withPivot('status', 'note')->withTimestamps();
     }
-
 
     /*
     |--------------------------------------------------------------------------

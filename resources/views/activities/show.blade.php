@@ -241,18 +241,24 @@
 
                         <div class="meta-item">
 
-                            <div class="instructor-photo meta-yellow">
-                                @if($activity->instructor_image && file_exists(public_path($activity->instructor_image)))
-                                    <img
-                                        src="{{ asset($activity->instructor_image) }}"
-                                        alt="Foto profil {{ $activity->instructor_display_name }}"
-                                    >
-                                @else
+                            @if ($activity->instructor_image_url)
+                                <button
+                                    type="button"
+                                    class="instructor-photo meta-yellow instructor-photo--interactive"
+                                    data-instructor-photo="{{ $activity->instructor_image_url }}"
+                                    data-instructor-name="{{ $activity->instructor_display_name }}"
+                                    aria-label="Lihat foto pengajar {{ $activity->instructor_display_name }}"
+                                >
+                                    <img src="{{ $activity->instructor_image_url }}" alt="" loading="lazy">
+                                    <span class="instructor-photo-hint" aria-hidden="true">+</span>
+                                </button>
+                            @else
+                                <div class="instructor-photo meta-yellow">
                                     <span>
                                         {{ strtoupper(substr($activity->instructor_display_name, 0, 1)) }}
                                     </span>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
 
                             <div>
 
@@ -365,6 +371,8 @@
 ========================================================= --}}
 
 @include('partials.site-footer')
+
+@include('partials.instructor-lightbox')
 
 
 <script>

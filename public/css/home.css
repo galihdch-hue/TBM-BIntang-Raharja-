@@ -3485,6 +3485,9 @@ a {
 }
 
 .empty-icon {
+    display: flex;
+    justify-content: center;
+
     font-size: 45px;
 
     animation:

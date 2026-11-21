@@ -75,7 +75,7 @@ class ImageStorage
             return asset('images/'.$path);
         }
 
-        return Storage::disk('public')->url($path);
+        return asset('storage/'.$path);
     }
 
     private function decode(UploadedFile $upload): \GdImage
